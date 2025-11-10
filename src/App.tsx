@@ -16,21 +16,104 @@ export default function AW_Speaker_DataScientist() {
   const [showVideo, setShowVideo] = useState(false);
   const formModalRef = useRef<FormModalRef>(null);
 
+  // Enhanced smooth and slow scrolling
+  React.useEffect(() => {
+    const smoothScrollTo = (targetY: number, duration: number = 1200) => {
+      const startY = window.pageYOffset;
+      const distance = targetY - startY;
+      let startTime: number | null = null;
+
+      const easeInOutCubic = (t: number): number => {
+        return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      };
+
+      const animation = (currentTime: number) => {
+        if (startTime === null) startTime = currentTime;
+        const timeElapsed = currentTime - startTime;
+        const progress = Math.min(timeElapsed / duration, 1);
+        const ease = easeInOutCubic(progress);
+
+        window.scrollTo(0, startY + distance * ease);
+
+        if (progress < 1) {
+          requestAnimationFrame(animation);
+        }
+      };
+
+      requestAnimationFrame(animation);
+    };
+
+    const handleSmoothScroll = (e: Event) => {
+      const target = e.target as HTMLElement;
+      const anchor = target.closest('a');
+      
+      if (anchor && anchor.getAttribute('href')?.startsWith('#')) {
+        const href = anchor.getAttribute('href');
+        if (href && href !== '#') {
+          e.preventDefault();
+          const targetId = href.substring(1);
+          const targetElement = document.getElementById(targetId);
+          if (targetElement) {
+            const headerOffset = 80;
+            const elementPosition = targetElement.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+            smoothScrollTo(offsetPosition, 1200); // 1200ms for slower scroll
+          }
+        }
+      }
+    };
+
+    // Add smooth scroll behavior to all anchor links
+    document.addEventListener('click', handleSmoothScroll, true);
+    
+    return () => {
+      document.removeEventListener('click', handleSmoothScroll, true);
+    };
+  }, []);
+
   const handleLearnMoreClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    // Scroll to video section smoothly
+    // Scroll to video section smoothly and slowly
     const videoSection = document.getElementById('hero');
     if (videoSection) {
-      videoSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      // Small delay to ensure scroll completes before showing video
-      setTimeout(() => {
-        setShowVideo(true);
-        // Play the YouTube video by updating the iframe src with autoplay
-        if (videoRef.current) {
-          const baseUrl = "https://www.youtube.com/embed/EaF5SGvw5tI?si=mgH-hs2QPlzN7jPN";
-          videoRef.current.src = `${baseUrl}&autoplay=1`;
-        }
-      }, 500);
+      const headerOffset = 80;
+      const elementPosition = videoSection.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      
+      // Use the same smooth scroll function
+      const smoothScrollTo = (targetY: number, duration: number = 1200) => {
+        const startY = window.pageYOffset;
+        const distance = targetY - startY;
+        let startTime: number | null = null;
+
+        const easeInOutCubic = (t: number): number => {
+          return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        };
+
+        const animation = (currentTime: number) => {
+          if (startTime === null) startTime = currentTime;
+          const timeElapsed = currentTime - startTime;
+          const progress = Math.min(timeElapsed / duration, 1);
+          const ease = easeInOutCubic(progress);
+
+          window.scrollTo(0, startY + distance * ease);
+
+          if (progress < 1) {
+            requestAnimationFrame(animation);
+          } else {
+            // After scroll completes, show video
+            setShowVideo(true);
+            if (videoRef.current) {
+              const baseUrl = "https://www.youtube.com/embed/EaF5SGvw5tI?si=mgH-hs2QPlzN7jPN";
+              videoRef.current.src = `${baseUrl}&autoplay=1`;
+            }
+          }
+        };
+
+        requestAnimationFrame(animation);
+      };
+
+      smoothScrollTo(offsetPosition, 1200);
     } else {
       setShowVideo(true);
       if (videoRef.current) {
