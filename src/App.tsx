@@ -82,15 +82,15 @@ export default function AW_Speaker_DataScientist() {
             {showVideo ? (
               <iframe
                 ref={videoRef}
-                className="w-full h-auto rounded-3xl shadow-xl lg:h-full lg:object-contain"
+                className="w-full h-auto rounded-2xl sm:rounded-3xl shadow-xl lg:h-full lg:object-contain"
                 src="https://www.youtube.com/embed/EaF5SGvw5tI?si=mgH-hs2QPlzN7jPN&autoplay=1"
                 title="YouTube video player"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
-                style={{ aspectRatio: '16/9', minHeight: '315px' }}
+                style={{ aspectRatio: '16/9', minHeight: '200px' }}
               ></iframe>
             ) : (
-              <div className="w-full h-full relative rounded-3xl shadow-xl overflow-hidden" style={{ aspectRatio: '16/9', minHeight: '315px' }}>
+              <div className="w-full h-full relative rounded-2xl sm:rounded-3xl shadow-xl overflow-hidden" style={{ aspectRatio: '16/9', minHeight: '200px' }}>
                 <img
                   src="/images/headshot.jpg"
                   alt="Artea Wright"
@@ -102,8 +102,9 @@ export default function AW_Speaker_DataScientist() {
 
           {/* Content Side - Desktop Right */}
           <div className="introduction text-center lg:text-left lg:flex lg:flex-col lg:justify-center lg:h-full">
-            <div className="mx-auto mb-6 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium lg:mx-0 lg:mb-8" style={{ backgroundColor: '#ffece0', color: '#7e1946' }}>
-              ✨ Data Scientist • Keynote Speaker • Panelist • Consultant
+            <div className="mx-auto mb-6 inline-flex items-center gap-2 rounded-full px-3 py-2 text-xs sm:text-sm font-medium lg:mx-0 lg:mb-8" style={{ backgroundColor: '#ffece0', color: '#7e1946' }}>
+              <span className="hidden sm:inline">✨ Data Scientist • Keynote Speaker • Panelist • Consultant</span>
+              <span className="sm:hidden">✨ Speaker • Consultant</span>
             </div>
             <h1 className="text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl lg:text-5xl lg:mb-6" style={{ color: '#fffbf2' }}>
                 Pattern Discovery in Human–Machine Collaboration.
@@ -112,16 +113,16 @@ export default function AW_Speaker_DataScientist() {
                 Uncovering unseen patterns and converting them into decisions, systems, and products for the future of human–machine collaboration.
             </p>
             <div className="mt-6 flex flex-wrap items-center justify-center gap-2 lg:justify-start lg:mb-8">
-              <p className="text-sm lg:text-base" style={{ color: '#fffbf2' }}>Topics: </p>
+              <p className="text-xs sm:text-sm lg:text-base" style={{ color: '#fffbf2' }}>Topics: </p>
               {chips.map((c) => (
                 <Pill key={c}>{c}</Pill>
               ))}
             </div>
             <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center lg:justify-start lg:mt-0">
-              <a href="#contact" onClick={(e) => { e.preventDefault(); handleOpenFormModal(); }} className="inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-4 text-base font-semibold shadow" style={{ backgroundColor: '#fffbf2', color: '#7e1946' }}>
+              <a href="#contact" onClick={(e) => { e.preventDefault(); handleOpenFormModal(); }} className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-3 sm:py-4 text-sm sm:text-base font-semibold shadow" style={{ backgroundColor: '#fffbf2', color: '#7e1946' }}>
                 🎤 Invite to Speak
               </a>
-              <a href="#reel" onClick={handleLearnMoreClick} className="inline-flex items-center justify-center gap-2 rounded-2xl border px-6 py-4 text-base font-semibold" style={{ color: '#fffbf2', borderColor: '#fffbf2' }}>
+              <a href="#reel" onClick={handleLearnMoreClick} className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-2xl border px-6 py-3 sm:py-4 text-sm sm:text-base font-semibold" style={{ color: '#fffbf2', borderColor: '#fffbf2' }}>
                 ▶️ Learn More
               </a>
             </div>
@@ -132,9 +133,9 @@ export default function AW_Speaker_DataScientist() {
          {/* SOCIAL PROOF */}
       <Section id="logos" className="pt-8 pb-8">
       <p className="text-sm lg:text-base" style={{ color: '#7e1946' }}>...Partners, Employers, and Collaborators:</p>
-        <div className="grid grid-cols-5 items-center gap-4 opacity-70">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 items-center gap-4 opacity-70">
           {logos.map((logo, index) => (
-            <img key={index} src={logo} alt={`Logo ${index + 1}`} className="py-2 text-center text-xs w-50 h-35" style={{ color: '#9d9171' }}/>
+            <img key={index} src={logo} alt={`Logo ${index + 1}`} className="py-2 text-center text-xs w-full h-auto object-contain" style={{ color: '#9d9171' }}/>
           ))}
         </div>
       </Section>
@@ -142,17 +143,17 @@ export default function AW_Speaker_DataScientist() {
 
 
       {/* ABOUT */}
-      <Section id="about" className="pt-12">
+      <Section id="about" className="pt-8 sm:pt-12">
         <Card>
           <div className="flex flex-col gap-4 sm:flex-row">
             {LOGO_DATA_URL ? (
-              <img src={LOGO_DATA_URL} alt="Speaker mark" className="h-28 w-28 shrink-0 self-center rounded-2xl object-contain sm:self-start" />
+              <img src={LOGO_DATA_URL} alt="Speaker mark" className="h-24 w-24 sm:h-28 sm:w-28 shrink-0 self-center rounded-2xl object-contain sm:self-start" />
             ) : (
-              <div aria-label="Speaker portrait placeholder" role="img" className="h-28 w-28 shrink-0 self-center rounded-2xl sm:self-start" style={{ background: 'linear-gradient(135deg,#ab4e68,#c4a287)' }} />
+              <div aria-label="Speaker portrait placeholder" role="img" className="h-24 w-24 sm:h-28 sm:w-28 shrink-0 self-center rounded-2xl sm:self-start" style={{ background: 'linear-gradient(135deg,#ab4e68,#c4a287)' }} />
             )}
-            <div>
-              <h2 className="text-xl font-bold tracking-tight" style={{ color: '#7e1946' }}>About Artea</h2>
-              <p className="mt-2 text-sm" style={{ color: '#4b4453' }}>
+            <div className="flex-1 min-w-0">
+              <h2 className="text-lg sm:text-xl font-bold tracking-tight" style={{ color: '#7e1946' }}>About Artea</h2>
+              <p className="mt-2 text-xs sm:text-sm" style={{ color: '#4b4453' }}>
               Artea serves as a voice advocating for the anticipation and architecting of the future of human–machine collaboration. By blending data science, software engineering, and Generative AI, she surfaces unseen patterns and converts them into decisions about design systems, and products. Current focus through 2030: the impact of the converging emerging technologies on the future of work in tech; The mission: equip institutions and communities to modernize curricula, build equitable pathways, and ensure the workforce thrives in a rapidly changing economy.
               </p>
               <div className="mt-3 flex flex-wrap gap-2 text-xs" style={{ color: '#9d9171' }}>
@@ -166,19 +167,19 @@ export default function AW_Speaker_DataScientist() {
       </Section>
 
       {/* WORK EXPERIENCE */}
-      <Section id="work" className="pt-12">
-        <h2 className="mb-4 text-xl font-bold tracking-tight" style={{ color: '#7e1946' }}>Applied Work and Impact</h2>
-        <p className="text-sm" style={{ color: '#4b4453' }}>
+      <Section id="work" className="pt-8 sm:pt-12">
+        <h2 className="mb-4 text-lg sm:text-xl font-bold tracking-tight" style={{ color: '#7e1946' }}>Applied Work and Impact</h2>
+        <p className="text-xs sm:text-sm" style={{ color: '#4b4453' }}>
           Data and research translated to real-world solutions. Delivering measurable outcomes for businesses and institutions.
         </p>
-        <div className="mt-4 grid grid-cols-2 gap-2">
+        <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-2">
           {workContent.map(({ k, i, t }) => (
-            <Card key={k} className="project_cards" widthClass="w-[300px]" heightClass="h-[400px]">
+            <Card key={k} className="project_cards">
               <div className="flex items-start gap-3">
-                <div className="rounded-xl p-2" aria-hidden style={{ backgroundColor: '#fffbf2', color: '#7e1946', border: '1px solid #c4a287' }}>{i}</div>
-                <div>
+                <div className="rounded-xl p-2 shrink-0" aria-hidden style={{ backgroundColor: '#fffbf2', color: '#7e1946', border: '1px solid #c4a287' }}>{i}</div>
+                <div className="min-w-0 flex-1">
                   <p className="text-sm font-semibold" style={{ color: '#7e1946' }}>{k}</p>
-                  <p className="text-sm" style={{ color: '#4b4453' }}>{t}</p>
+                  <p className="text-sm mt-1" style={{ color: '#4b4453' }}>{t}</p>
                 </div>
               </div>
             </Card>
@@ -187,16 +188,16 @@ export default function AW_Speaker_DataScientist() {
       </Section>
 
       {/* TOPICS & FORMATS */}
-      <Section id="topics" className="pt-12">
-        <h2 className="mb-4 text-xl font-bold tracking-tight" style={{ color: '#7e1946' }}>Talks & Formats</h2>
+      <Section id="topics" className="pt-8 sm:pt-12">
+        <h2 className="mb-4 text-lg sm:text-xl font-bold tracking-tight" style={{ color: '#7e1946' }}>Talks & Formats</h2>
         <div id="download-resume" className="grid grid-cols-1 gap-4">
           {topics.map((t) => (
             <Card key={t.title}>
               <div className="flex items-start gap-3">
-                <div className="rounded-xl p-2" aria-hidden style={{ backgroundColor: '#fffbf2', color: '#7e1946', border: '1px solid #c4a287' }}>{t.icon}</div>
-                <div className="flex-1">
-                  <h3 className="font-semibold" style={{ color: '#7e1946' }}>{t.title}</h3>
-                  <p className="mt-1 text-sm" style={{ color: '#4b4453' }}>{t.blurb}</p>
+                <div className="rounded-xl p-2 shrink-0" aria-hidden style={{ backgroundColor: '#fffbf2', color: '#7e1946', border: '1px solid #c4a287' }}>{t.icon}</div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-semibold text-sm sm:text-base" style={{ color: '#7e1946' }}>{t.title}</h3>
+                  <p className="mt-1 text-xs sm:text-sm" style={{ color: '#4b4453' }}>{t.blurb}</p>
                   {t.formats && t.formats.length > 0 && (
                     <div className="mt-3 flex flex-wrap items-center gap-2">
                       {t.formats.map((format) => (
@@ -223,17 +224,17 @@ export default function AW_Speaker_DataScientist() {
       </Section>
       
       {/* EVENTS */}
-      <Section id="events" className="pt-12">
-        <h2 className="mb-4 text-xl font-bold tracking-tight" style={{ color: '#7e1946' }}>Upcoming Talks</h2>
+      <Section id="events" className="pt-8 sm:pt-12">
+        <h2 className="mb-4 text-lg sm:text-xl font-bold tracking-tight" style={{ color: '#7e1946' }}>Upcoming Talks</h2>
         <div className="grid grid-cols-1 gap-4">
           {events.map((event, index) => (
             <Card key={index}>
-              <div className="flex items-start justify-between">
-                <div>
+              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
+                <div className="flex-1 min-w-0">
                   <h3 className="text-sm font-medium" style={{ color: '#7e1946' }}>{event.title}</h3>
-                  <p className="text-xs mt-1" style={{ color: '#9d9171' }}>{event.date} • {event.location}</p>
+                  <p className="text-xs mt-1 break-words" style={{ color: '#9d9171' }}>{event.date} • {event.location}</p>
                 </div>
-                <a href={event.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-sm font-medium" style={{ color: '#ab4e68' }}>
+                <a href={event.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs sm:text-sm font-medium shrink-0" style={{ color: '#ab4e68' }}>
                   Details →
                 </a>
               </div>
@@ -244,8 +245,8 @@ export default function AW_Speaker_DataScientist() {
       </Section>
 
       {/* TESTIMONIALS */}
-      <Section id="testimonials" className="pt-12 pb-12">
-        <h2 className="mb-4 text-xl font-bold tracking-tight" style={{ color: '#7e1946' }}>Testimonials</h2>
+      <Section id="testimonials" className="pt-8 sm:pt-12 pb-8 sm:pb-12">
+        <h2 className="mb-4 text-lg sm:text-xl font-bold tracking-tight" style={{ color: '#7e1946' }}>Testimonials</h2>
         <div className="grid grid-cols-1 gap-4">
           {testimonials.map((t, idx) => (
             <Card key={idx}>

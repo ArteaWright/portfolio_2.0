@@ -62,11 +62,11 @@ const FormModal = forwardRef<FormModalRef, FormModalProps>(
 
     return (
       <div
-        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm overflow-y-auto"
         onClick={handleBackdropClick}
       >
         <div
-          className="w-full max-w-md rounded-2xl shadow-xl overflow-hidden"
+          className="w-full max-w-md rounded-2xl shadow-xl overflow-hidden my-auto"
           style={{ backgroundColor: "rgba(255,251,242,0.95)" }}
           onClick={(e) => e.stopPropagation()}
         >
