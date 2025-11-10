@@ -23,9 +23,6 @@ export default function Navbar() {
               {n.label}
             </a>
           ))}
-          <a href="#contact" className="rounded-xl px-3 py-2 text-sm font-medium text-white focus:outline-none focus-visible:ring-2" style={{ backgroundColor: '#ab4e68' }}>
-            Book Me
-          </a>
           <a href="#download-resume" className="rounded-xl px-3 py-2 text-sm font-medium text-white focus:outline-none focus-visible:ring-2" style={{ backgroundColor: '#2b0818' }}>
             Hire Me
           </a>

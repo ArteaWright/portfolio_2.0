@@ -2,7 +2,6 @@ export const navItems = [
   { label: "About", href: "#about" },
   { label: "Topics", href: "#topics" },
   { label: "Testimonials", href: "#testimonials" },
-  { label: "Contact", href: "#contact" },
 ];
 
 export const chips = ["AI/ML", "Generative AI","Emerging Technologies", "Software Engineering", "Data Science", "Data Ethics"];

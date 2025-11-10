@@ -1,23 +1,71 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import Section from "./components/Section";
 import Card from "./components/Card";
 import Pill from "./components/Pill";
 import Navbar from "./components/Navbar";
 import Chatbot from "./components/Chatbot";
+import FormModal from "./components/FormModal";
+import type { FormModalRef, FormField } from "./components/FormModal";
 import { chips, topics, testimonials, workContent, logos, events } from "./data";
 
 
 const LOGO_DATA_URL = "/images/logo.png";
 
 export default function AW_Speaker_DataScientist() {
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const videoRef = useRef<HTMLIFrameElement>(null);
+  const [showVideo, setShowVideo] = useState(false);
+  const formModalRef = useRef<FormModalRef>(null);
 
   const handleLearnMoreClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    if (videoRef.current) {
-      videoRef.current.play();
+    // Scroll to video section smoothly
+    const videoSection = document.getElementById('hero');
+    if (videoSection) {
+      videoSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      // Small delay to ensure scroll completes before showing video
+      setTimeout(() => {
+        setShowVideo(true);
+        // Play the YouTube video by updating the iframe src with autoplay
+        if (videoRef.current) {
+          const baseUrl = "https://www.youtube.com/embed/EaF5SGvw5tI?si=mgH-hs2QPlzN7jPN";
+          videoRef.current.src = `${baseUrl}&autoplay=1`;
+        }
+      }, 500);
+    } else {
+      setShowVideo(true);
+      if (videoRef.current) {
+        const baseUrl = "https://www.youtube.com/embed/EaF5SGvw5tI?si=mgH-hs2QPlzN7jPN";
+        videoRef.current.src = `${baseUrl}&autoplay=1`;
+      }
     }
   };
+
+  const handleDownloadResume = () => {
+    // Create a temporary anchor element to trigger download
+    const link = document.createElement('a');
+    link.href = '/file/ArteaWright_Data-Science.pdf';
+    link.download = 'ArteaWright_Data-Science.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const handleOpenFormModal = () => {
+    formModalRef.current?.open();
+  };
+
+  const handleFormSubmit = (formData: Record<string, string>) => {
+    // Handle form submission here
+    console.log("Form submitted:", formData);
+    // You can add API call or other logic here
+  };
+
+  const formFields: FormField[] = [
+    { name: "name", label: "Your Name", placeholder: "Ada Lovelace", type: "text", required: true },
+    { name: "email", label: "Email", placeholder: "you@example.edu", type: "email", required: true },
+    { name: "organization", label: "Organization", placeholder: "Diverse Tech Bootcamp", type: "text", required: false },
+    { name: "message", label: "Message", placeholder: "Tell me about your audience, goals, and dates.", type: "textarea", required: false },
+  ];
 
   return (
     <div className="min-h-screen text-gray-900" style={{ background: "linear-gradient(to bottom, #fffbf2, #ffffff)" }}>
@@ -30,17 +78,26 @@ export default function AW_Speaker_DataScientist() {
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12 lg:items-stretch w-full lg:h-[85vh]">
 
           {/* Video Side - Desktop Left */}
-          <div className="w-full flex items-center lg:h-full">
-            <video
-              ref={videoRef}
-              className="w-full h-auto rounded-3xl shadow-xl lg:h-full lg:object-contain"
-              controls
-              poster="/images/headshot.jpg"
-              style={{ aspectRatio: '16/9' }}
-            >
-              {/* <source src="/videos/introduction.mp4" type="video/mp4" /> */}
-              Your browser does not support the video tag.
-            </video>
+          <div className="video w-full flex items-center lg:h-full">
+            {showVideo ? (
+              <iframe
+                ref={videoRef}
+                className="w-full h-auto rounded-3xl shadow-xl lg:h-full lg:object-contain"
+                src="https://www.youtube.com/embed/EaF5SGvw5tI?si=mgH-hs2QPlzN7jPN&autoplay=1"
+                title="YouTube video player"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                style={{ aspectRatio: '16/9', minHeight: '315px' }}
+              ></iframe>
+            ) : (
+              <div className="w-full h-full relative rounded-3xl shadow-xl overflow-hidden" style={{ aspectRatio: '16/9', minHeight: '315px' }}>
+                <img
+                  src="/images/headshot.jpg"
+                  alt="Artea Wright"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            )}
           </div>
 
           {/* Content Side - Desktop Right */}
@@ -61,7 +118,7 @@ export default function AW_Speaker_DataScientist() {
               ))}
             </div>
             <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center lg:justify-start lg:mt-0">
-              <a href="#contact" className="inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-4 text-base font-semibold shadow" style={{ backgroundColor: '#fffbf2', color: '#7e1946' }}>
+              <a href="#contact" onClick={(e) => { e.preventDefault(); handleOpenFormModal(); }} className="inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-4 text-base font-semibold shadow" style={{ backgroundColor: '#fffbf2', color: '#7e1946' }}>
                 🎤 Invite to Speak
               </a>
               <a href="#reel" onClick={handleLearnMoreClick} className="inline-flex items-center justify-center gap-2 rounded-2xl border px-6 py-4 text-base font-semibold" style={{ color: '#fffbf2', borderColor: '#fffbf2' }}>
@@ -77,7 +134,7 @@ export default function AW_Speaker_DataScientist() {
       <p className="text-sm lg:text-base" style={{ color: '#7e1946' }}>...Partners, Employers, and Collaborators:</p>
         <div className="grid grid-cols-5 items-center gap-4 opacity-70">
           {logos.map((logo, index) => (
-            <img key={index} src={logo} alt={`Logo ${index + 1}`} className="py-2 text-center text-xs w-50 h-40" style={{ color: '#9d9171' }}/>
+            <img key={index} src={logo} alt={`Logo ${index + 1}`} className="py-2 text-center text-xs w-50 h-35" style={{ color: '#9d9171' }}/>
           ))}
         </div>
       </Section>
@@ -153,28 +210,18 @@ export default function AW_Speaker_DataScientist() {
           ))}
         </div>
         {/* Buttons for Requests */}
-        <a href="#contact" className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold text-white shadow" style={{ backgroundColor: '#2b0818' }}>
+        <a href="https://calendly.com/arteawright/30min" target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold text-white shadow" style={{ backgroundColor: '#2b0818' }}>
           Request an Introductory Call
         </a>
-        <button className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold text-white shadow" style={{ backgroundColor: '#ab4e68' }}>
+        <button 
+          onClick={handleDownloadResume}
+          className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold text-white shadow" 
+          style={{ backgroundColor: '#ab4e68' }}
+        >
           Download Resume
         </button>
       </Section>
-
-
-      {/* TESTIMONIALS */}
-      <Section id="testimonials" className="pt-12">
-        <h2 className="mb-4 text-xl font-bold tracking-tight" style={{ color: '#7e1946' }}>Testimonials</h2>
-        <div className="grid grid-cols-1 gap-4">
-          {testimonials.map((t, idx) => (
-            <Card key={idx}>
-              <p className="text-sm italic" style={{ color: '#4b4453' }}>“{t.quote}”</p>
-              <p className="mt-2 text-xs" style={{ color: '#9d9171' }}>— {t.by}</p>
-            </Card>
-          ))}
-        </div>
-      </Section>
-
+      
       {/* EVENTS */}
       <Section id="events" className="pt-12">
         <h2 className="mb-4 text-xl font-bold tracking-tight" style={{ color: '#7e1946' }}>Upcoming Talks</h2>
@@ -195,40 +242,41 @@ export default function AW_Speaker_DataScientist() {
         </div>
       </Section>
 
+      {/* TESTIMONIALS */}
+      <Section id="testimonials" className="pt-12 pb-12">
+        <h2 className="mb-4 text-xl font-bold tracking-tight" style={{ color: '#7e1946' }}>Testimonials</h2>
+        <div className="grid grid-cols-1 gap-4">
+          {testimonials.map((t, idx) => (
+            <Card key={idx}>
+              <p className="text-sm italic" style={{ color: '#4b4453' }}>“{t.quote}”</p>
+              <p className="mt-2 text-xs" style={{ color: '#9d9171' }}>— {t.by}</p>
+            </Card>
+          ))}
+        </div>
+      </Section>
+
       {/* CONTACT */}
-      <Section id="contact" className="pt-12 pb-16">
+      {/* <Section id="contact" className="pt-12 pb-16">
         <Card>
           <h2 className="text-xl font-bold tracking-tight" style={{ color: '#7e1946' }}>Invite to Speak</h2>
           <p className="mt-2 text-sm" style={{ color: '#4b4453' }}>
-            Share your event or program needs. You’ll receive a response within 2 business days.
+            Share your event or program needs. You'll receive a response within 2 business days.
           </p>
-          <form className="mt-4 grid grid-cols-1 gap-3" onSubmit={(e) => e.preventDefault()}>
-            <label className="text-sm">
-              <span className="mb-1 block" style={{ color: '#7e1946' }}>Your Name</span>
-              <input className="w-full rounded-xl border px-3 py-2 focus:outline-none focus:ring-2" style={{ borderColor: '#c4a287' }} placeholder="Ada Lovelace" />
-            </label>
-            <label className="text-sm">
-              <span className="mb-1 block" style={{ color: '#7e1946' }}>Email</span>
-              <input type="email" className="w-full rounded-xl border px-3 py-2 focus:outline-none focus:ring-2" style={{ borderColor: '#c4a287' }} placeholder="you@example.edu" />
-            </label>
-            <label className="text-sm">
-              <span className="mb-1 block" style={{ color: '#7e1946' }}>Organization</span>
-              <input className="w-full rounded-xl border px-3 py-2 focus:outline-none focus:ring-2" style={{ borderColor: '#c4a287' }} placeholder="Diverse Tech Bootcamp" />
-            </label>
-            <label className="text-sm">
-              <span className="mb-1 block" style={{ color: '#7e1946' }}>Message</span>
-              <textarea rows={4} className="w-full rounded-xl border px-3 py-2 focus:outline-none focus:ring-2" style={{ borderColor: '#c4a287' }} placeholder="Tell me about your audience, goals, and dates." />
-            </label>
-            <button type="submit" className="inline-flex items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold text-white" style={{ backgroundColor: '#ab4e68' }}>
+          <div className="mt-4">
+            <button
+              onClick={handleOpenFormModal}
+              className="inline-flex items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold text-white" 
+              style={{ backgroundColor: '#ab4e68' }}
+            >
               ✉️ Send Inquiry
             </button>
-            <div className="flex items-center justify-center gap-4 pt-2" style={{ color: '#9d9171' }}>
-              <a href="#" aria-label="LinkedIn" className="rounded p-2 hover:bg-gray-100">in</a>
-              <a href="#" aria-label="Twitter / X" className="rounded p-2 hover:bg-gray-100">𝕏</a>
-            </div>
-          </form>
+          </div>
+          <div className="flex items-center justify-center gap-4 pt-4" style={{ color: '#9d9171' }}>
+            <a href="#" aria-label="LinkedIn" className="rounded p-2 hover:bg-gray-100">in</a>
+            <a href="#" aria-label="Twitter / X" className="rounded p-2 hover:bg-gray-100">𝕏</a>
+          </div>
         </Card>
-      </Section>
+      </Section> */}
 
       {/* FOOTER */}
       <footer className="border-t border-black/5 py-8" style={{ backgroundColor: 'rgba(255,251,242,0.9)' }}>
@@ -239,6 +287,16 @@ export default function AW_Speaker_DataScientist() {
 
       {/* CHATBOT */}
       <Chatbot />
+
+      {/* FORM MODAL */}
+      <FormModal
+        ref={formModalRef}
+        title="Invite to Speak"
+        subtitle="Share your event or program needs. You'll receive a response within 2 business days."
+        fields={formFields}
+        buttonText="✉️ Send Inquiry"
+        onSubmit={handleFormSubmit}
+      />
     </div>
   );
 }
