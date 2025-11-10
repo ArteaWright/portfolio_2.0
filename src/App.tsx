@@ -240,6 +240,7 @@ export default function AW_Speaker_DataScientist() {
             </Card>
           ))}
         </div>
+        <p className="text-sm" style={{ color: '#4b4453', fontWeight: 'bold' }}>...</p>
       </Section>
 
       {/* TESTIMONIALS */}
