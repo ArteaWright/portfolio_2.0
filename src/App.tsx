@@ -77,8 +77,15 @@ export default function AW_Speaker_DataScientist() {
         <Section id="hero" className="flex items-center justify-center min-h-screen max-w-screen-lg">
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12 lg:items-stretch w-full lg:h-[85vh]">
 
-          {/* Video Side - Desktop Left */}
-          <div className="video w-full flex items-center lg:h-full">
+          {/* Title Badge - Mobile First */}
+          <div className="lg:hidden text-center">
+            <div className="mx-auto mb-6 inline-flex items-center gap-2 rounded-full px-3 py-2 text-xs sm:text-sm font-medium" style={{ backgroundColor: '#ffece0', color: '#7e1946' }}>
+              <span className="titles">Data Scientist • Keynote Speaker • Panelist • Consultant</span>
+            </div>
+          </div>
+
+          {/* Video Side - Desktop Left, Mobile Second */}
+          <div className="video w-full flex items-center lg:h-full order-2 lg:order-1">
             {showVideo ? (
               <iframe
                 ref={videoRef}
@@ -100,11 +107,13 @@ export default function AW_Speaker_DataScientist() {
             )}
           </div>
 
-          {/* Content Side - Desktop Right */}
-          <div className="introduction text-center lg:text-left lg:flex lg:flex-col lg:justify-center lg:h-full">
-            <div className="mx-auto mb-6 inline-flex items-center gap-2 rounded-full px-3 py-2 text-xs sm:text-sm font-medium lg:mx-0 lg:mb-8" style={{ backgroundColor: '#ffece0', color: '#7e1946' }}>
-              <span className="hidden sm:inline">✨ Data Scientist • Keynote Speaker • Panelist • Consultant</span>
-              <span className="sm:hidden">✨ Speaker • Consultant</span>
+          {/* Content Side - Desktop Right, Mobile Third */}
+          <div className="introduction text-center lg:text-left lg:flex lg:flex-col lg:justify-center lg:h-full order-3 lg:order-2">
+            {/* Title Badge - Desktop Only */}
+            <div className="hidden lg:block mb-6 lg:mb-8">
+              <div className="inline-flex items-center gap-2 rounded-full px-3 py-2 text-xs sm:text-sm font-medium" style={{ backgroundColor: '#ffece0', color: '#7e1946' }}>
+                <span className="titles">Data Scientist • Keynote Speaker • Panelist • Consultant</span>
+              </div>
             </div>
             <h1 className="text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl lg:text-5xl lg:mb-6" style={{ color: '#fffbf2' }}>
                 Pattern Discovery in Human–Machine Collaboration.
