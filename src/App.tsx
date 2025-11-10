@@ -1,0 +1,244 @@
+import React, { useRef } from "react";
+import Section from "./components/Section";
+import Card from "./components/Card";
+import Pill from "./components/Pill";
+import Navbar from "./components/Navbar";
+import Chatbot from "./components/Chatbot";
+import { chips, topics, testimonials, workContent, logos, events } from "./data";
+
+
+const LOGO_DATA_URL = "/images/logo.png";
+
+export default function AW_Speaker_DataScientist() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const handleLearnMoreClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    if (videoRef.current) {
+      videoRef.current.play();
+    }
+  };
+
+  return (
+    <div className="min-h-screen text-gray-900" style={{ background: "linear-gradient(to bottom, #fffbf2, #ffffff)" }}>
+      {/* NAVBAR */}
+      <Navbar />
+
+      {/* HERO */}
+      <div style={{ backgroundColor: '#2b0818' }}>
+        <Section id="hero" className="flex items-center justify-center min-h-screen max-w-screen-lg">
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12 lg:items-stretch w-full lg:h-[85vh]">
+
+          {/* Video Side - Desktop Left */}
+          <div className="w-full flex items-center lg:h-full">
+            <video
+              ref={videoRef}
+              className="w-full h-auto rounded-3xl shadow-xl lg:h-full lg:object-contain"
+              controls
+              poster="/images/headshot.jpg"
+              style={{ aspectRatio: '16/9' }}
+            >
+              {/* <source src="/videos/introduction.mp4" type="video/mp4" /> */}
+              Your browser does not support the video tag.
+            </video>
+          </div>
+
+          {/* Content Side - Desktop Right */}
+          <div className="introduction text-center lg:text-left lg:flex lg:flex-col lg:justify-center lg:h-full">
+            <div className="mx-auto mb-6 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium lg:mx-0 lg:mb-8" style={{ backgroundColor: '#ffece0', color: '#7e1946' }}>
+              ✨ Data Scientist • Keynote Speaker • Panelist • Consultant
+            </div>
+            <h1 className="text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl lg:text-5xl lg:mb-6" style={{ color: '#fffbf2' }}>
+                Pattern Discovery in Human–Machine Collaboration.
+            </h1>
+            <p className="mx-auto mt-4 max-w-prose text-sm lg:text-base lg:mx-0 lg:mt-0 lg:mb-8" style={{ color: '#fffbf2' }}>
+                Uncovering unseen patterns and converting them into decisions, systems, and products for the future of human–machine collaboration.
+            </p>
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-2 lg:justify-start lg:mb-8">
+              <p className="text-sm lg:text-base" style={{ color: '#fffbf2' }}>Topics: </p>
+              {chips.map((c) => (
+                <Pill key={c}>{c}</Pill>
+              ))}
+            </div>
+            <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center lg:justify-start lg:mt-0">
+              <a href="#contact" className="inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-4 text-base font-semibold shadow" style={{ backgroundColor: '#fffbf2', color: '#7e1946' }}>
+                🎤 Invite to Speak
+              </a>
+              <a href="#reel" onClick={handleLearnMoreClick} className="inline-flex items-center justify-center gap-2 rounded-2xl border px-6 py-4 text-base font-semibold" style={{ color: '#fffbf2', borderColor: '#fffbf2' }}>
+                ▶️ Learn More
+              </a>
+            </div>
+          </div>
+        </div>
+        </Section>
+
+         {/* SOCIAL PROOF */}
+      <Section id="logos" className="pt-8 pb-8">
+      <p className="text-sm lg:text-base" style={{ color: '#7e1946' }}>...Partners, Employers, and Collaborators:</p>
+        <div className="grid grid-cols-5 items-center gap-4 opacity-70">
+          {logos.map((logo, index) => (
+            <img key={index} src={logo} alt={`Logo ${index + 1}`} className="py-2 text-center text-xs w-50 h-40" style={{ color: '#9d9171' }}/>
+          ))}
+        </div>
+      </Section>
+      </div>
+
+
+      {/* ABOUT */}
+      <Section id="about" className="pt-12">
+        <Card>
+          <div className="flex flex-col gap-4 sm:flex-row">
+            {LOGO_DATA_URL ? (
+              <img src={LOGO_DATA_URL} alt="Speaker mark" className="h-28 w-28 shrink-0 self-center rounded-2xl object-contain sm:self-start" />
+            ) : (
+              <div aria-label="Speaker portrait placeholder" role="img" className="h-28 w-28 shrink-0 self-center rounded-2xl sm:self-start" style={{ background: 'linear-gradient(135deg,#ab4e68,#c4a287)' }} />
+            )}
+            <div>
+              <h2 className="text-xl font-bold tracking-tight" style={{ color: '#7e1946' }}>About Artea</h2>
+              <p className="mt-2 text-sm" style={{ color: '#4b4453' }}>
+              Artea serves as a voice advocating for the anticipation and architecting of the future of human–machine collaboration. By blending data science, software engineering, and Generative AI, she surfaces unseen patterns and converts them into decisions about design systems, and products. Current focus through 2030: the impact of the converging emerging technologies on the future of work in tech; The mission: equip institutions and communities to modernize curricula, build equitable pathways, and ensure the workforce thrives in a rapidly changing economy.
+              </p>
+              <div className="mt-3 flex flex-wrap gap-2 text-xs" style={{ color: '#9d9171' }}>
+                <span>🎓 Faculty PD</span>
+                <span>🏛️ Policy & Industry</span>
+                <span>📅 100+ talks</span>
+              </div>
+            </div>
+          </div>
+        </Card>
+      </Section>
+
+      {/* WORK EXPERIENCE */}
+      <Section id="work" className="pt-12">
+        <h2 className="mb-4 text-xl font-bold tracking-tight" style={{ color: '#7e1946' }}>Applied Work and Impact</h2>
+        <p className="text-sm" style={{ color: '#4b4453' }}>
+          Data and research translated to real-world solutions. Delivering measurable outcomes for businesses and institutions.
+        </p>
+        <div className="mt-4 grid grid-cols-2 gap-2">
+          {workContent.map(({ k, i, t }) => (
+            <Card key={k} className="project_cards" widthClass="w-[300px]" heightClass="h-[400px]">
+              <div className="flex items-start gap-3">
+                <div className="rounded-xl p-2" aria-hidden style={{ backgroundColor: '#fffbf2', color: '#7e1946', border: '1px solid #c4a287' }}>{i}</div>
+                <div>
+                  <p className="text-sm font-semibold" style={{ color: '#7e1946' }}>{k}</p>
+                  <p className="text-sm" style={{ color: '#4b4453' }}>{t}</p>
+                </div>
+              </div>
+            </Card>
+          ))}
+        </div>
+      </Section>
+
+      {/* TOPICS & FORMATS */}
+      <Section id="topics" className="pt-12">
+        <h2 className="mb-4 text-xl font-bold tracking-tight" style={{ color: '#7e1946' }}>Talks & Formats</h2>
+        <div id="download-resume" className="grid grid-cols-1 gap-4">
+          {topics.map((t) => (
+            <Card key={t.title}>
+              <div className="flex items-start gap-3">
+                <div className="rounded-xl p-2" aria-hidden style={{ backgroundColor: '#fffbf2', color: '#7e1946', border: '1px solid #c4a287' }}>{t.icon}</div>
+                <div className="flex-1">
+                  <h3 className="font-semibold" style={{ color: '#7e1946' }}>{t.title}</h3>
+                  <p className="mt-1 text-sm" style={{ color: '#4b4453' }}>{t.blurb}</p>
+                  {t.formats && t.formats.length > 0 && (
+                    <div className="mt-3 flex flex-wrap items-center gap-2">
+                      {t.formats.map((format) => (
+                        <Pill key={format}>{format}</Pill>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </Card>
+          ))}
+        </div>
+        {/* Buttons for Requests */}
+        <a href="#contact" className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold text-white shadow" style={{ backgroundColor: '#2b0818' }}>
+          Request an Introductory Call
+        </a>
+        <button className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold text-white shadow" style={{ backgroundColor: '#ab4e68' }}>
+          Download Resume
+        </button>
+      </Section>
+
+
+      {/* TESTIMONIALS */}
+      <Section id="testimonials" className="pt-12">
+        <h2 className="mb-4 text-xl font-bold tracking-tight" style={{ color: '#7e1946' }}>Testimonials</h2>
+        <div className="grid grid-cols-1 gap-4">
+          {testimonials.map((t, idx) => (
+            <Card key={idx}>
+              <p className="text-sm italic" style={{ color: '#4b4453' }}>“{t.quote}”</p>
+              <p className="mt-2 text-xs" style={{ color: '#9d9171' }}>— {t.by}</p>
+            </Card>
+          ))}
+        </div>
+      </Section>
+
+      {/* EVENTS */}
+      <Section id="events" className="pt-12">
+        <h2 className="mb-4 text-xl font-bold tracking-tight" style={{ color: '#7e1946' }}>Upcoming Talks</h2>
+        <div className="grid grid-cols-1 gap-4">
+          {events.map((event, index) => (
+            <Card key={index}>
+              <div className="flex items-start justify-between">
+                <div>
+                  <h3 className="text-sm font-medium" style={{ color: '#7e1946' }}>{event.title}</h3>
+                  <p className="text-xs mt-1" style={{ color: '#9d9171' }}>{event.date} • {event.location}</p>
+                </div>
+                <a href={event.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-sm font-medium" style={{ color: '#ab4e68' }}>
+                  Details →
+                </a>
+              </div>
+            </Card>
+          ))}
+        </div>
+      </Section>
+
+      {/* CONTACT */}
+      <Section id="contact" className="pt-12 pb-16">
+        <Card>
+          <h2 className="text-xl font-bold tracking-tight" style={{ color: '#7e1946' }}>Invite to Speak</h2>
+          <p className="mt-2 text-sm" style={{ color: '#4b4453' }}>
+            Share your event or program needs. You’ll receive a response within 2 business days.
+          </p>
+          <form className="mt-4 grid grid-cols-1 gap-3" onSubmit={(e) => e.preventDefault()}>
+            <label className="text-sm">
+              <span className="mb-1 block" style={{ color: '#7e1946' }}>Your Name</span>
+              <input className="w-full rounded-xl border px-3 py-2 focus:outline-none focus:ring-2" style={{ borderColor: '#c4a287' }} placeholder="Ada Lovelace" />
+            </label>
+            <label className="text-sm">
+              <span className="mb-1 block" style={{ color: '#7e1946' }}>Email</span>
+              <input type="email" className="w-full rounded-xl border px-3 py-2 focus:outline-none focus:ring-2" style={{ borderColor: '#c4a287' }} placeholder="you@example.edu" />
+            </label>
+            <label className="text-sm">
+              <span className="mb-1 block" style={{ color: '#7e1946' }}>Organization</span>
+              <input className="w-full rounded-xl border px-3 py-2 focus:outline-none focus:ring-2" style={{ borderColor: '#c4a287' }} placeholder="Diverse Tech Bootcamp" />
+            </label>
+            <label className="text-sm">
+              <span className="mb-1 block" style={{ color: '#7e1946' }}>Message</span>
+              <textarea rows={4} className="w-full rounded-xl border px-3 py-2 focus:outline-none focus:ring-2" style={{ borderColor: '#c4a287' }} placeholder="Tell me about your audience, goals, and dates." />
+            </label>
+            <button type="submit" className="inline-flex items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold text-white" style={{ backgroundColor: '#ab4e68' }}>
+              ✉️ Send Inquiry
+            </button>
+            <div className="flex items-center justify-center gap-4 pt-2" style={{ color: '#9d9171' }}>
+              <a href="#" aria-label="LinkedIn" className="rounded p-2 hover:bg-gray-100">in</a>
+              <a href="#" aria-label="Twitter / X" className="rounded p-2 hover:bg-gray-100">𝕏</a>
+            </div>
+          </form>
+        </Card>
+      </Section>
+
+      {/* FOOTER */}
+      <footer className="border-t border-black/5 py-8" style={{ backgroundColor: 'rgba(255,251,242,0.9)' }}>
+        <div className="mx-auto max-w-screen-md px-4 text-center text-xs" style={{ color: '#9d9171' }}>
+          <p>© {new Date().getFullYear()} Emerging Tech Speaker. Centering equity in the age of convergence.</p>
+        </div>
+      </footer>
+
+      {/* CHATBOT */}
+      <Chatbot />
+    </div>
+  );
+}

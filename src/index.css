@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+/* Smooth scrolling for the entire viewport */
+html {
+  scroll-behavior: smooth;
+}
+
+/* THEME VARIABLES: Warm palette: #7e1946, #ab4e68, #c4a287, #9d9171, #b07156, #fffbf2 */
+:root {
+  --brand-1000:#1c1005;
+  --brand-950:#2b0818;
+  --brand-900:#7e1946;
+  --brand-700:#ab4e68;
+  --brand-800:#e685a0;
+  --brand-600:#b07156;
+  --brand-500:#b07156;
+  --brand-400:#c4a287;
+  --brand-300:#9d9171;
+  --brand-200:#ffece0;
+  --brand-50: #fffbf2;
+}
