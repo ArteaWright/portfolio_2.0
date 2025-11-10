@@ -281,7 +281,7 @@ export default function AW_Speaker_DataScientist() {
       {/* FOOTER */}
       <footer className="border-t border-black/5 py-8" style={{ backgroundColor: 'rgba(255,251,242,0.9)' }}>
         <div className="mx-auto max-w-screen-md px-4 text-center text-xs" style={{ color: '#9d9171' }}>
-          <p>© {new Date().getFullYear()} Emerging Tech Speaker. Centering equity in the age of convergence.</p>
+          <p>© {new Date().getFullYear()} Artea Wright. Centering clear insights in the age of AI convergence in tech.</p>
         </div>
       </footer>
 
