@@ -63,7 +63,7 @@ export default function AW_Speaker_DataScientist() {
   const formFields: FormField[] = [
     { name: "name", label: "Your Name", placeholder: "Ada Lovelace", type: "text", required: true },
     { name: "email", label: "Email", placeholder: "you@example.edu", type: "email", required: true },
-    { name: "organization", label: "Organization", placeholder: "Diverse Tech Bootcamp", type: "text", required: false },
+    { name: "organization", label: "Organization", placeholder: "Bootcamp, institute, or company", type: "text", required: false },
     { name: "message", label: "Message", placeholder: "Tell me about your audience, goals, and dates.", type: "textarea", required: false },
   ];
 
