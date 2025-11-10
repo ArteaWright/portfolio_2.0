@@ -125,14 +125,14 @@ const FormModal = forwardRef<FormModalRef, FormModalProps>(
                   setFormData({});
                   onClose?.();
                 }}
-                className="flex-1 inline-flex items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold border"
+                className="flex-1 inline-flex items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold border transition-all duration-200 hover:bg-gray-50 hover:scale-105 active:scale-95 active:bg-gray-100"
                 style={{ color: "#7e1946", borderColor: "#c4a287" }}
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="flex-1 inline-flex items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold text-white shadow"
+                className="flex-1 inline-flex items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold text-white shadow transition-all duration-200 hover:opacity-90 hover:scale-105 active:scale-95 active:opacity-80"
                 style={{ backgroundColor: "#ab4e68" }}
               >
                 {buttonText}

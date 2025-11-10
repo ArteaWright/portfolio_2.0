@@ -128,10 +128,10 @@ export default function AW_Speaker_DataScientist() {
               ))}
             </div>
             <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center lg:justify-start lg:mt-0">
-              <a href="#contact" onClick={(e) => { e.preventDefault(); handleOpenFormModal(); }} className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-3 sm:py-4 text-sm sm:text-base font-semibold shadow" style={{ backgroundColor: '#fffbf2', color: '#7e1946' }}>
+              <a href="#contact" onClick={(e) => { e.preventDefault(); handleOpenFormModal(); }} className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-3 sm:py-4 text-sm sm:text-base font-semibold shadow transition-all duration-200 hover:opacity-90 hover:scale-105 active:scale-95 active:opacity-80" style={{ backgroundColor: '#fffbf2', color: '#7e1946' }}>
                 🎤 Invite to Speak
               </a>
-              <a href="#reel" onClick={handleLearnMoreClick} className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-2xl border px-6 py-3 sm:py-4 text-sm sm:text-base font-semibold" style={{ color: '#fffbf2', borderColor: '#fffbf2' }}>
+              <a href="#reel" onClick={handleLearnMoreClick} className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-2xl border px-6 py-3 sm:py-4 text-sm sm:text-base font-semibold transition-all duration-200 hover:bg-white/10 hover:scale-105 active:scale-95 active:bg-white/5" style={{ color: '#fffbf2', borderColor: '#fffbf2' }}>
                 ▶️ Learn More
               </a>
             </div>
@@ -220,12 +220,12 @@ export default function AW_Speaker_DataScientist() {
           ))}
         </div>
         {/* Buttons for Requests */}
-        <a href="https://calendly.com/arteawright/30min" target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold text-white shadow" style={{ backgroundColor: '#2b0818' }}>
+        <a href="https://calendly.com/arteawright/30min" target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold text-white shadow transition-all duration-200 hover:opacity-90 hover:scale-105 active:scale-95 active:opacity-80" style={{ backgroundColor: '#2b0818' }}>
           Request an Introductory Call
         </a>
         <button 
           onClick={handleDownloadResume}
-          className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold text-white shadow" 
+          className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold text-white shadow transition-all duration-200 hover:opacity-90 hover:scale-105 active:scale-95 active:opacity-80" 
           style={{ backgroundColor: '#ab4e68' }}
         >
           Download Resume
@@ -243,7 +243,7 @@ export default function AW_Speaker_DataScientist() {
                   <h3 className="text-sm font-medium" style={{ color: '#7e1946' }}>{event.title}</h3>
                   <p className="text-xs mt-1 break-words" style={{ color: '#9d9171' }}>{event.date} • {event.location}</p>
                 </div>
-                <a href={event.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs sm:text-sm font-medium shrink-0" style={{ color: '#ab4e68' }}>
+                <a href={event.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs sm:text-sm font-medium shrink-0 transition-all duration-200 hover:opacity-80 hover:underline active:opacity-70" style={{ color: '#ab4e68' }}>
                   Details →
                 </a>
               </div>
