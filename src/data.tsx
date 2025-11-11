@@ -32,8 +32,8 @@ export const testimonials = [
 ];
 
 export const workContent = [
-  { k: "AI + Data", i: "🧠", t: "Ethical, explainable models grounded in diverse datasets." },
-  { k: "Web3 + Trust", i: "🧩", t: "Portable credentials and transparent funding for learners." },
+  { k: "AI + Data", i: "🧠", t: "Ethical, explainable models grounded in diverse datasets.", image: "/images/ai-data.jpg" },
+  { k: "Web3 + Trust", i: "🧩", t: "Portable credentials and transparent funding for learners.", image: "/images/web3-trust.jpg" },
 ];
 
 export const events = [

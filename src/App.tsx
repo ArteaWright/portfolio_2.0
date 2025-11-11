@@ -307,13 +307,34 @@ export default function AW_Speaker_DataScientist() {
           Data and research translated to real-world solutions. Delivering measurable outcomes for businesses and institutions.
         </p>
         <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-2">
-          {workContent.map(({ k, i, t }) => (
-            <Card key={k} className="project_cards">
-              <div className="flex items-start gap-3">
-                <div className="rounded-xl p-2 shrink-0" aria-hidden style={{ backgroundColor: '#fffbf2', color: '#7e1946', border: '1px solid #c4a287' }}>{i}</div>
-                <div className="min-w-0 flex-1">
-                  <p className="text-sm font-semibold" style={{ color: '#7e1946' }}>{k}</p>
-                  <p className="text-sm mt-1" style={{ color: '#4b4453' }}>{t}</p>
+          {workContent.map(({ k, i, t, image }) => (
+            <Card key={k} className="project_cards overflow-hidden">
+              <div className="flex flex-col h-full">
+                {/* Image Section */}
+                {image && (
+                  <div className="w-full h-40 sm:h-48 overflow-hidden rounded-t-xl">
+                    <img
+                      src={image}
+                      alt={k}
+                      className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                      onError={(e) => {
+                        // Fallback to a gradient background if image doesn't exist
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = 'none';
+                        if (target.parentElement) {
+                          target.parentElement.style.background = 'linear-gradient(135deg, #ab4e68, #c4a287)';
+                        }
+                      }}
+                    />
+                  </div>
+                )}
+                {/* Content Section */}
+                <div className="flex items-start gap-3 p-4 flex-1">
+                  <div className="rounded-xl p-2 shrink-0" aria-hidden style={{ backgroundColor: '#fffbf2', color: '#7e1946', border: '1px solid #c4a287' }}>{i}</div>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-sm font-semibold" style={{ color: '#7e1946' }}>{k}</p>
+                    <p className="text-sm mt-1" style={{ color: '#4b4453' }}>{t}</p>
+                  </div>
                 </div>
               </div>
             </Card>
