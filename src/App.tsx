@@ -172,12 +172,10 @@ export default function AW_Speaker_DataScientist() {
           hint: error.hint,
           code: error.code
         });
-        alert(`Error submitting form: ${error.message}. Please check the console for details.`);
         throw error; // Throw error so modal stays open
       }
 
       console.log('Form submitted successfully:', data);
-      alert('Thank you! Your inquiry has been submitted successfully.');
     } catch (error: any) {
       console.error('Form submission error:', error);
       if (error?.message && !error.message.includes('Supabase credentials missing')) {
