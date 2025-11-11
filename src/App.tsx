@@ -5,7 +5,10 @@ import Pill from "./components/Pill";
 import Navbar from "./components/Navbar";
 import Chatbot from "./components/Chatbot";
 import FormModal from "./components/FormModal";
+import ProjectModal from "./components/ProjectModal";
 import type { FormModalRef, FormField } from "./components/FormModal";
+import type { ProjectModalRef } from "./components/ProjectModal";
+import type { ProjectData } from "./components/ProjectModal";
 import { chips, topics, testimonials, workContent, logos, events } from "./data";
 
 
@@ -15,6 +18,7 @@ export default function AW_Speaker_DataScientist() {
   const videoRef = useRef<HTMLIFrameElement>(null);
   const [showVideo, setShowVideo] = useState(false);
   const formModalRef = useRef<FormModalRef>(null);
+  const projectModalRef = useRef<ProjectModalRef>(null);
 
   // Enhanced smooth and slow scrolling
   React.useEffect(() => {
@@ -307,39 +311,55 @@ export default function AW_Speaker_DataScientist() {
           Data and research translated to real-world solutions. Delivering measurable outcomes for businesses and institutions.
         </p>
         <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-2">
-          {workContent.map(({ k, i, t, image }) => (
-            <Card key={k} className="project_cards overflow-hidden transition-all duration-300 ease-in-out hover:scale-[1.02] hover:shadow-xl cursor-pointer group">
-              <div className="flex flex-col h-full">
-                {/* Image Section */}
-                {image && (
-                  <div className="w-full h-40 sm:h-48 overflow-hidden rounded-t-xl relative">
-                    <img
-                      src={image}
-                      alt={k}
-                      className="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
-                      onError={(e) => {
-                        // Fallback to a gradient background if image doesn't exist
-                        const target = e.target as HTMLImageElement;
-                        target.style.display = 'none';
-                        if (target.parentElement) {
-                          target.parentElement.style.background = 'linear-gradient(135deg, #ab4e68, #c4a287)';
-                        }
-                      }}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  </div>
-                )}
-                {/* Content Section */}
-                <div className="flex items-start gap-3 p-4 flex-1 transition-colors duration-300 group-hover:bg-white/50">
-                  <div className="rounded-xl p-2 shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3" aria-hidden style={{ backgroundColor: '#fffbf2', color: '#7e1946', border: '1px solid #c4a287' }}>{i}</div>
-                  <div className="min-w-0 flex-1">
-                    <p className="text-sm font-semibold transition-colors duration-300 group-hover:text-[#ab4e68]" style={{ color: '#7e1946' }}>{k}</p>
-                    <p className="text-sm mt-1" style={{ color: '#4b4453' }}>{t}</p>
+          {workContent.map((project) => {
+            const { k, i, t, image } = project;
+            return (
+              <Card 
+                key={k} 
+                className="project_cards overflow-hidden transition-all duration-300 ease-in-out hover:scale-[1.02] hover:shadow-xl cursor-pointer group"
+                onClick={() => {
+                  const projectData: ProjectData = {
+                    title: k,
+                    icon: i,
+                    description: t,
+                    image: image,
+                    research: (project as any).research
+                  };
+                  projectModalRef.current?.open(projectData);
+                }}
+              >
+                <div className="flex flex-col h-full">
+                  {/* Image Section */}
+                  {image && (
+                    <div className="w-full h-40 sm:h-48 overflow-hidden rounded-t-xl relative">
+                      <img
+                        src={image}
+                        alt={k}
+                        className="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
+                        onError={(e) => {
+                          // Fallback to a gradient background if image doesn't exist
+                          const target = e.target as HTMLImageElement;
+                          target.style.display = 'none';
+                          if (target.parentElement) {
+                            target.parentElement.style.background = 'linear-gradient(135deg, #ab4e68, #c4a287)';
+                          }
+                        }}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </div>
+                  )}
+                  {/* Content Section */}
+                  <div className="flex items-start gap-3 p-4 flex-1 transition-colors duration-300 group-hover:bg-white/50">
+                    <div className="rounded-xl p-2 shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3" aria-hidden style={{ backgroundColor: '#fffbf2', color: '#7e1946', border: '1px solid #c4a287' }}>{i}</div>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm font-semibold transition-colors duration-300 group-hover:text-[#ab4e68]" style={{ color: '#7e1946' }}>{k}</p>
+                      <p className="text-sm mt-1" style={{ color: '#4b4453' }}>{t}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Card>
-          ))}
+              </Card>
+            );
+          })}
         </div>
       </Section>
 
@@ -455,6 +475,9 @@ export default function AW_Speaker_DataScientist() {
         buttonText="✉️ Send Inquiry"
         onSubmit={handleFormSubmit}
       />
+
+      {/* PROJECT MODAL */}
+      <ProjectModal ref={projectModalRef} />
     </div>
   );
 }

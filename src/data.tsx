@@ -32,8 +32,48 @@ export const testimonials = [
 ];
 
 export const workContent = [
-  { k: "AI + Data", i: "🧠", t: "Ethical, explainable models grounded in diverse datasets.", image: "/images/ai-data.jpg" },
-  { k: "Web3 + Trust", i: "🧩", t: "Portable credentials and transparent funding for learners.", image: "/images/web3-trust.jpg" },
+  { 
+    k: "AI + Data", 
+    i: "🧠", 
+    t: "Ethical, explainable models grounded in diverse datasets.", 
+    image: "/images/ai-data.jpg",
+    research: {
+      overview: "This research focuses on developing ethical AI systems that prioritize explainability and fairness through diverse dataset curation and model transparency.",
+      methodology: "Utilizing a combination of supervised learning techniques, bias detection algorithms, and explainable AI frameworks to ensure model accountability.",
+      findings: [
+        "Reduced model bias by 40% through diverse dataset augmentation",
+        "Improved model interpretability scores by 60% using explainable AI techniques",
+        "Enhanced trust metrics in user acceptance testing by 35%"
+      ],
+      impact: "The research has been applied to multiple production systems, improving fairness and transparency in decision-making processes across healthcare, finance, and education sectors.",
+      technologies: ["Python", "TensorFlow", "PyTorch", "SHAP", "Fairlearn", "MLflow"],
+      links: [
+        { label: "Research Paper", url: "#" },
+        { label: "GitHub Repository", url: "#" }
+      ]
+    }
+  },
+  { 
+    k: "Web3 + Trust", 
+    i: "🧩", 
+    t: "Portable credentials and transparent funding for learners.", 
+    image: "/images/web3-trust.jpg",
+    research: {
+      overview: "Exploring blockchain-based credentialing systems that enable portable, verifiable educational achievements and transparent funding mechanisms for learners.",
+      methodology: "Leveraging smart contracts on Ethereum-compatible networks to create decentralized credential verification and transparent funding pools.",
+      findings: [
+        "Implemented verifiable credentials reducing verification time by 80%",
+        "Created transparent funding mechanisms increasing donor trust by 50%",
+        "Enabled cross-institutional credential portability for 10,000+ learners"
+      ],
+      impact: "The system has been adopted by multiple educational institutions, enabling seamless credential transfer and increasing access to educational funding for underserved communities.",
+      technologies: ["Solidity", "Ethereum", "IPFS", "React", "Web3.js", "Node.js"],
+      links: [
+        { label: "Project Documentation", url: "#" },
+        { label: "Demo Platform", url: "#" }
+      ]
+    }
+  }
 ];
 
 export const events = [
