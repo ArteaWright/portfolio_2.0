@@ -168,7 +168,7 @@ export default function AW_Speaker_DataScientist() {
           </div>
 
           {/* Video Side - Desktop Left, Mobile Second */}
-          <div className="video w-full flex items-center lg:h-full order-2 lg:order-1">
+          <div className="video w-full flex items-center h-[400px] lg:h-full order-2 lg:order-1">
             {showVideo ? (
               <iframe
                 ref={videoRef}
