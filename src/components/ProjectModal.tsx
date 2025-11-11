@@ -26,7 +26,7 @@ export interface ProjectModalRef {
 }
 
 const ProjectModal = forwardRef<ProjectModalRef, ProjectModalProps>(
-  ({ project, onClose }, ref) => {
+  ({ onClose }, ref) => {
     const [isOpen, setIsOpen] = useState(false);
     const [currentProject, setCurrentProject] = useState<ProjectData | undefined>(undefined);
 
