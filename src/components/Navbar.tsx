@@ -31,20 +31,42 @@ export default function Navbar() {
           <span className="inline-block h-5 w-5">{menuOpen ? "✖️" : "☰"}</span>
         </button>
       </div>
-      {menuOpen && (
-        <div className="sm:hidden border-t border-black/5" style={{ backgroundColor: '#fffbf2' }}>
-          <div className="mx-auto max-w-screen-md px-4 py-3 space-y-2">
-            {navItems.map((n) => (
-              <a key={n.label} href={n.href} onClick={() => setMenuOpen(false)} className="block rounded-lg px-2 py-2 text-sm hover:bg-gray-50" style={{ color: '#7e1946' }}>
-                {n.label}
-              </a>
-            ))}
-            <a href="#contact" onClick={() => setMenuOpen(false)} className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-xl px-3 py-2 text-sm font-medium text-white" style={{ backgroundColor: '#ab4e68' }}>
-              🎤 Book Me
+      <div 
+        className={`sm:hidden border-t border-black/5 overflow-hidden transition-all duration-500 ease-in-out ${
+          menuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+        }`}
+        style={{ backgroundColor: '#fffbf2' }}
+      >
+        <div className="mx-auto max-w-screen-md px-4 py-3 space-y-2">
+          {navItems.map((n) => (
+            <a 
+              key={n.label} 
+              href={n.href} 
+              onClick={() => setMenuOpen(false)} 
+              className="block rounded-lg px-2 py-2 text-sm hover:bg-gray-50 transition-opacity duration-300" 
+              style={{ 
+                color: '#7e1946',
+                opacity: menuOpen ? 1 : 0,
+                transitionDelay: menuOpen ? `${navItems.indexOf(n) * 50}ms` : '0ms'
+              }}
+            >
+              {n.label}
             </a>
-          </div>
+          ))}
+          <a 
+            href="#contact" 
+            onClick={() => setMenuOpen(false)} 
+            className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-xl px-3 py-2 text-sm font-medium text-white transition-opacity duration-300" 
+            style={{ 
+              backgroundColor: '#ab4e68',
+              opacity: menuOpen ? 1 : 0,
+              transitionDelay: menuOpen ? `${navItems.length * 50}ms` : '0ms'
+            }}
+          >
+            🎤 Book Me
+          </a>
         </div>
-      )}
+      </div>
     </header>
   );
 }
