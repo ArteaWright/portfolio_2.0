@@ -10,7 +10,7 @@ export default function Navbar() {
     <header className="sticky top-0 z-40 border-b border-black/5" style={{ background: "rgba(255,251,242,0.9)", backdropFilter: "blur(8px)" }}>
       <div className="mx-auto flex max-w-screen-md items-center justify-between px-4 py-3">
         <a href="#top" className="flex items-center gap-2">
-          {LOGO_DATA_URL && LOGO_DATA_URL !== "PASTE_DATA_URL_HERE" ? (
+          {LOGO_DATA_URL ? (
             <img src={LOGO_DATA_URL} alt="Logo" className="h-8 w-8 rounded-xl object-contain" />
           ) : (
             <div aria-hidden className="h-8 w-8 rounded-xl" style={{ background: "linear-gradient(135deg,#ab4e68,#c4a287)" }} />
@@ -19,7 +19,7 @@ export default function Navbar() {
         </a>
         <nav className="hidden sm:flex items-center gap-5">
           {navItems.map((n) => (
-            <a key={n.label} href={n.href} className="text-sm rounded focus:outline-none focus-visible:ring-2" style={{ color: "#7e1946", ['--tw-ring-color']: '#ab4e68' }}>
+            <a key={n.label} href={n.href} className="text-sm rounded focus:outline-none focus-visible:ring-2" style={{ color: "#7e1946" } as React.CSSProperties}>
               {n.label}
             </a>
           ))}

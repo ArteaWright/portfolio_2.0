@@ -156,7 +156,7 @@ export default function AW_Speaker_DataScientist() {
       <Navbar />
 
       {/* HERO */}
-      <div style={{ backgroundColor: '#2b0818' }}>
+      <div style={{ backgroundColor: '#2b0818', paddingTop: '20px' }}>
         <Section id="hero" className="flex items-center justify-center min-h-screen max-w-screen-lg">
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12 lg:items-stretch w-full lg:h-[85vh]">
 
