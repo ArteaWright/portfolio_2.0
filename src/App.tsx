@@ -137,10 +137,54 @@ export default function AW_Speaker_DataScientist() {
     formModalRef.current?.open();
   };
 
-  const handleFormSubmit = (formData: Record<string, string>) => {
-    // Handle form submission here
-    console.log("Form submitted:", formData);
-    // You can add API call or other logic here
+  const handleFormSubmit = async (formData: Record<string, string>) => {
+    try {
+      // Import supabase client
+      const { supabase } = await import('./lib/supabase');
+      
+      // Check if Supabase is configured
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+      const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+      
+      if (!supabaseUrl || !supabaseKey) {
+        console.error('Supabase credentials not found. Please set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in your .env file');
+        alert('Database configuration error. Please contact support.');
+        throw new Error('Supabase credentials missing');
+      }
+      
+      // Insert form data into Supabase
+      const { data, error } = await supabase
+        .from('form_submissions')
+        .insert([
+          {
+            name: formData.name,
+            email: formData.email,
+            organization: formData.organization || null,
+            message: formData.message || null,
+          },
+        ])
+        .select();
+
+      if (error) {
+        console.error('Supabase error details:', {
+          message: error.message,
+          details: error.details,
+          hint: error.hint,
+          code: error.code
+        });
+        alert(`Error submitting form: ${error.message}. Please check the console for details.`);
+        throw error; // Throw error so modal stays open
+      }
+
+      console.log('Form submitted successfully:', data);
+      alert('Thank you! Your inquiry has been submitted successfully.');
+    } catch (error: any) {
+      console.error('Form submission error:', error);
+      if (error?.message && !error.message.includes('Supabase credentials missing')) {
+        alert(`Error: ${error.message}`);
+      }
+      throw error; // Re-throw to keep modal open
+    }
   };
 
   const formFields: FormField[] = [

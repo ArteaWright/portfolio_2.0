@@ -43,11 +43,17 @@ const FormModal = forwardRef<FormModalRef, FormModalProps>(
       }));
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
-      onSubmit?.(formData);
-      setIsOpen(false);
-      setFormData({});
+      try {
+        await onSubmit?.(formData);
+        // Only close modal if onSubmit succeeds (doesn't throw)
+        setIsOpen(false);
+        setFormData({});
+      } catch (error) {
+        // Keep modal open if there's an error
+        console.error('Form submission error:', error);
+      }
     };
 
     const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
