@@ -291,9 +291,9 @@ export default function AW_Speaker_DataScientist() {
               Artea serves as a voice advocating for the anticipation and architecting of the future of human–machine collaboration. By blending data science, software engineering, and Generative AI, she surfaces unseen patterns and converts them into decisions about design systems, and products. Current focus through 2030: the impact of the converging emerging technologies on the future of work in tech; The mission: equip institutions and communities to modernize curricula, build equitable pathways, and ensure the workforce thrives in a rapidly changing economy.
               </p>
               <div className="mt-3 flex flex-wrap gap-2 text-xs" style={{ color: '#9d9171' }}>
-                <span>🎓 Faculty PD</span>
-                <span>🏛️ Policy & Industry</span>
-                <span>📅 100+ talks</span>
+                <span>🎓 Upskilling Workshops</span>
+                <span>🏛️ Insights & Research</span>
+                <span>📅 10+ talks</span>
               </div>
             </div>
           </div>
