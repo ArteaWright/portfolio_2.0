@@ -54,16 +54,16 @@ export default function Navbar() {
             </a>
           ))}
           <a 
-            href="#contact" 
+            href="#download-resume" 
             onClick={() => setMenuOpen(false)} 
             className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-xl px-3 py-2 text-sm font-medium text-white transition-opacity duration-300" 
             style={{ 
-              backgroundColor: '#ab4e68',
+              backgroundColor: '#2b0818',
               opacity: menuOpen ? 1 : 0,
               transitionDelay: menuOpen ? `${navItems.length * 50}ms` : '0ms'
             }}
           >
-            🎤 Book Me
+            Hire Me
           </a>
         </div>
       </div>

@@ -380,7 +380,7 @@ export default function AW_Speaker_DataScientist() {
       </footer>
 
       {/* CHATBOT */}
-      <Chatbot />
+      {/* <Chatbot /> */}
 
       {/* FORM MODAL */}
       <FormModal
