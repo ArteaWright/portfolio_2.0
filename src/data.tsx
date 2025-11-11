@@ -53,27 +53,27 @@ export const workContent = [
       ]
     }
   },
-  { 
-    k: "Web3 + Trust", 
-    i: "🧩", 
-    t: "Portable credentials and transparent funding for learners.", 
-    image: "/images/web3-trust.jpg",
-    research: {
-      overview: "Exploring blockchain-based credentialing systems that enable portable, verifiable educational achievements and transparent funding mechanisms for learners.",
-      methodology: "Leveraging smart contracts on Ethereum-compatible networks to create decentralized credential verification and transparent funding pools.",
-      findings: [
-        "Implemented verifiable credentials reducing verification time by 80%",
-        "Created transparent funding mechanisms increasing donor trust by 50%",
-        "Enabled cross-institutional credential portability for 10,000+ learners"
-      ],
-      impact: "The system has been adopted by multiple educational institutions, enabling seamless credential transfer and increasing access to educational funding for underserved communities.",
-      technologies: ["Solidity", "Ethereum", "IPFS", "React", "Web3.js", "Node.js"],
-      links: [
-        { label: "Project Documentation", url: "#" },
-        { label: "Demo Platform", url: "#" }
-      ]
-    }
-  }
+  // { 
+  //   k: "Web3 + Trust", 
+  //   i: "🧩", 
+  //   t: "Portable credentials and transparent funding for learners.", 
+  //   image: "/images/web3-trust.jpg",
+  //   research: {
+  //     overview: "Exploring blockchain-based credentialing systems that enable portable, verifiable educational achievements and transparent funding mechanisms for learners.",
+  //     methodology: "Leveraging smart contracts on Ethereum-compatible networks to create decentralized credential verification and transparent funding pools.",
+  //     findings: [
+  //       "Implemented verifiable credentials reducing verification time by 80%",
+  //       "Created transparent funding mechanisms increasing donor trust by 50%",
+  //       "Enabled cross-institutional credential portability for 10,000+ learners"
+  //     ],
+  //     impact: "The system has been adopted by multiple educational institutions, enabling seamless credential transfer and increasing access to educational funding for underserved communities.",
+  //     technologies: ["Solidity", "Ethereum", "IPFS", "React", "Web3.js", "Node.js"],
+  //     links: [
+  //       { label: "Project Documentation", url: "#" },
+  //       { label: "Demo Platform", url: "#" }
+  //     ]
+  //   }
+  // }
 ];
 
 export const events = [
