@@ -308,15 +308,15 @@ export default function AW_Speaker_DataScientist() {
         </p>
         <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-2">
           {workContent.map(({ k, i, t, image }) => (
-            <Card key={k} className="project_cards overflow-hidden">
+            <Card key={k} className="project_cards overflow-hidden transition-all duration-300 ease-in-out hover:scale-[1.02] hover:shadow-xl cursor-pointer group">
               <div className="flex flex-col h-full">
                 {/* Image Section */}
                 {image && (
-                  <div className="w-full h-40 sm:h-48 overflow-hidden rounded-t-xl">
+                  <div className="w-full h-40 sm:h-48 overflow-hidden rounded-t-xl relative">
                     <img
                       src={image}
                       alt={k}
-                      className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                      className="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
                       onError={(e) => {
                         // Fallback to a gradient background if image doesn't exist
                         const target = e.target as HTMLImageElement;
@@ -326,13 +326,14 @@ export default function AW_Speaker_DataScientist() {
                         }
                       }}
                     />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </div>
                 )}
                 {/* Content Section */}
-                <div className="flex items-start gap-3 p-4 flex-1">
-                  <div className="rounded-xl p-2 shrink-0" aria-hidden style={{ backgroundColor: '#fffbf2', color: '#7e1946', border: '1px solid #c4a287' }}>{i}</div>
+                <div className="flex items-start gap-3 p-4 flex-1 transition-colors duration-300 group-hover:bg-white/50">
+                  <div className="rounded-xl p-2 shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3" aria-hidden style={{ backgroundColor: '#fffbf2', color: '#7e1946', border: '1px solid #c4a287' }}>{i}</div>
                   <div className="min-w-0 flex-1">
-                    <p className="text-sm font-semibold" style={{ color: '#7e1946' }}>{k}</p>
+                    <p className="text-sm font-semibold transition-colors duration-300 group-hover:text-[#ab4e68]" style={{ color: '#7e1946' }}>{k}</p>
                     <p className="text-sm mt-1" style={{ color: '#4b4453' }}>{t}</p>
                   </div>
                 </div>
