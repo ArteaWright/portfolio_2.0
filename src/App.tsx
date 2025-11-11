@@ -3,7 +3,6 @@ import Section from "./components/Section";
 import Card from "./components/Card";
 import Pill from "./components/Pill";
 import Navbar from "./components/Navbar";
-import Chatbot from "./components/Chatbot";
 import FormModal from "./components/FormModal";
 import ProjectModal from "./components/ProjectModal";
 import type { FormModalRef, FormField } from "./components/FormModal";
