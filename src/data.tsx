@@ -1,10 +1,10 @@
 export const navItems = [
   { label: "About", href: "#about" },
-  { label: "Topics", href: "#topics" },
+  { label: "Substack", href: "#substack" },
   { label: "Testimonials", href: "#testimonials" },
 ];
 
-export const chips = ["AI/ML", "Generative AI","Emerging Technologies", "Software Engineering", "Data Science", "Data Ethics"];
+export const chips = ["Emerging Tech Convergence","Future-Fit Careers and Talent", "Operational Intelligence", "Education Reimagined"];
 
 export const topics = [
   { icon: "⚡", title: "Emerging Tech Convergence", blurb: "A data-driven look at the intersection of emerging technologies and learning ecosystems they demand through 2030 and beyond.", formats: ["Keynotes", "Advisory", "Panelist"] },

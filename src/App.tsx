@@ -5,10 +5,12 @@ import Pill from "./components/Pill";
 import Navbar from "./components/Navbar";
 import FormModal from "./components/FormModal";
 import ProjectModal from "./components/ProjectModal";
+import SubscribeModal from "./components/SubscribeModal";
 import type { FormModalRef, FormField } from "./components/FormModal";
 import type { ProjectModalRef } from "./components/ProjectModal";
 import type { ProjectData } from "./components/ProjectModal";
-import { chips, topics, testimonials, workContent, logos, events } from "./data";
+import type { SubscribeModalRef, SubscribeFormData } from "./components/SubscribeModal";
+import { chips, testimonials, workContent, logos, events } from "./data";
 
 
 const LOGO_DATA_URL = "/images/logo.png";
@@ -18,6 +20,7 @@ export default function AW_Speaker_DataScientist() {
   const [showVideo, setShowVideo] = useState(false);
   const formModalRef = useRef<FormModalRef>(null);
   const projectModalRef = useRef<ProjectModalRef>(null);
+  const subscribeModalRef = useRef<SubscribeModalRef>(null);
 
   // Enhanced smooth and slow scrolling
   React.useEffect(() => {
@@ -107,7 +110,7 @@ export default function AW_Speaker_DataScientist() {
             // After scroll completes, show video
             setShowVideo(true);
             if (videoRef.current) {
-              const baseUrl = "https://www.youtube.com/embed/EaF5SGvw5tI?si=mgH-hs2QPlzN7jPN";
+              const baseUrl = "https://www.youtube.com/embed/33EJ-QIHwZg?si=X-EXdg5OWbL_jVpr";
               videoRef.current.src = `${baseUrl}&autoplay=1`;
             }
           }
@@ -120,7 +123,7 @@ export default function AW_Speaker_DataScientist() {
     } else {
       setShowVideo(true);
       if (videoRef.current) {
-        const baseUrl = "https://www.youtube.com/embed/EaF5SGvw5tI?si=mgH-hs2QPlzN7jPN";
+        const baseUrl = "https://www.youtube.com/embed/33EJ-QIHwZg?si=X-EXdg5OWbL_jVpr";
         videoRef.current.src = `${baseUrl}&autoplay=1`;
       }
     }
@@ -188,6 +191,54 @@ export default function AW_Speaker_DataScientist() {
     }
   };
 
+  const handleSubscribeSubmit = async (formData: SubscribeFormData) => {
+    try {
+      const { supabase } = await import('./lib/supabase');
+
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+      const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+      if (!supabaseUrl || !supabaseKey) {
+        console.error('Supabase credentials not found. Please set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in your .env file');
+        alert('Database configuration error. Please contact support.');
+        throw new Error('Supabase credentials missing');
+      }
+
+      const { data, error } = await supabase
+        .from('web_subs')
+        .insert([
+          {
+            first_name: formData.firstName,
+            last_name: formData.lastName,
+            email: formData.email,
+            phone_number: formData.phone || null,
+            project_adds: formData.projectUpdates,
+            substack: formData.substackUpdates,
+            workshop: formData.workshopUpdates,
+          },
+        ])
+        .select();
+
+      if (error) {
+        console.error('Supabase error details:', {
+          message: error.message,
+          details: error.details,
+          hint: error.hint,
+          code: error.code
+        });
+        throw error;
+      }
+
+      console.log('Subscription submitted successfully:', data);
+    } catch (error: any) {
+      console.error('Subscribe submission error:', error);
+      if (error?.message && !error.message.includes('Supabase credentials missing')) {
+        alert(`Error: ${error.message}`);
+      }
+      throw error;
+    }
+  };
+
   const formFields: FormField[] = [
     { name: "name", label: "Your Name", placeholder: "Ada Lovelace", type: "text", required: true },
     { name: "email", label: "Email", placeholder: "you@example.edu", type: "email", required: true },
@@ -198,7 +249,7 @@ export default function AW_Speaker_DataScientist() {
   return (
     <div className="min-h-screen text-gray-900" style={{ background: "linear-gradient(to bottom, #fffbf2, #ffffff)" }}>
       {/* NAVBAR */}
-      <Navbar />
+      <Navbar onSubscribeClick={() => subscribeModalRef.current?.open()} />
 
       {/* HERO */}
       <div style={{ backgroundColor: '#2b0818', paddingTop: '20px' }}>
@@ -208,7 +259,7 @@ export default function AW_Speaker_DataScientist() {
           {/* Title Badge - Mobile First */}
           <div className="lg:hidden text-center">
             <div className="mx-auto mb-6 inline-flex items-center gap-2 rounded-full px-3 py-2 text-xs sm:text-sm font-medium" style={{ backgroundColor: '#ffece0', color: '#7e1946' }}>
-              <span className="titles">Data Scientist • Keynote Speaker • Panelist • Consultant</span>
+              <span className="titles">Emerging Tech Advocate • Technologist • Panelist • Consultant</span>
             </div>
           </div>
 
@@ -218,7 +269,7 @@ export default function AW_Speaker_DataScientist() {
               <iframe
                 ref={videoRef}
                 className="w-full h-auto rounded-2xl sm:rounded-3xl shadow-xl lg:h-full lg:object-contain"
-                src="https://www.youtube.com/embed/EaF5SGvw5tI?si=mgH-hs2QPlzN7jPN&autoplay=1"
+                src="https://www.youtube.com/embed/33EJ-QIHwZg?si=X-EXdg5OWbL_jVpr&autoplay=1"
                 title="YouTube video player"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
@@ -226,9 +277,12 @@ export default function AW_Speaker_DataScientist() {
               ></iframe>
             ) : (
               <div className="w-full h-full relative rounded-2xl sm:rounded-3xl shadow-xl overflow-hidden" style={{ aspectRatio: '16/9', minHeight: '200px' }}>
-                <img
-                  src="/images/headshot.jpg"
-                  alt="Artea Wright"
+                <video
+                  src="/videos/HeroVideo.mp4"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -240,14 +294,14 @@ export default function AW_Speaker_DataScientist() {
             {/* Title Badge - Desktop Only */}
             <div className="hidden lg:block mb-6 lg:mb-8">
               <div className="inline-flex items-center gap-2 rounded-full px-3 py-2 text-xs sm:text-sm font-medium" style={{ backgroundColor: '#ffece0', color: '#7e1946' }}>
-                <span className="titles">Data Scientist • Keynote Speaker • Panelist • Consultant</span>
+                <span className="titles">Emerging Tech Advocate • Technologist • Panelist • Consultant</span>
               </div>
             </div>
             <h1 className="text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl lg:text-5xl lg:mb-6" style={{ color: '#fffbf2' }}>
-                Pattern Discovery in Human–Machine Collaboration.
+                The Future is Just Tomorrow, asking if you were paying attention today.
             </h1>
             <p className="mx-auto mt-4 max-w-prose text-sm lg:text-base lg:mx-0 lg:mt-0 lg:mb-8" style={{ color: '#fffbf2' }}>
-                Uncovering unseen patterns and converting them into decisions, systems, and products for the future of human–machine collaboration.
+                Uncovering unseen patterns and converting them into decisions, resources, and products that thrive in a human + emerging tech + machine collaboration era.
             </p>
             <div className="mt-6 flex flex-wrap items-center justify-center gap-2 lg:justify-start lg:mb-8">
               <p className="text-xs sm:text-sm lg:text-base" style={{ color: '#fffbf2' }}>Topics: </p>
@@ -257,7 +311,7 @@ export default function AW_Speaker_DataScientist() {
             </div>
             <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center lg:justify-start lg:mt-0">
               <a href="#contact" onClick={(e) => { e.preventDefault(); handleOpenFormModal(); }} className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-3 sm:py-4 text-sm sm:text-base font-semibold shadow transition-all duration-200 hover:opacity-90 hover:scale-105 active:scale-95 active:opacity-80" style={{ backgroundColor: '#fffbf2', color: '#7e1946' }}>
-                🎤 Invite to Speak
+                📝 Contact Me
               </a>
               <a href="#reel" onClick={handleLearnMoreClick} className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-2xl border px-6 py-3 sm:py-4 text-sm sm:text-base font-semibold transition-all duration-200 hover:bg-white/10 hover:scale-105 active:scale-95 active:bg-white/5" style={{ color: '#fffbf2', borderColor: '#fffbf2' }}>
                 ▶️ Learn More
@@ -291,7 +345,9 @@ export default function AW_Speaker_DataScientist() {
             <div className="flex-1 min-w-0">
               <h2 className="text-lg sm:text-xl font-bold tracking-tight" style={{ color: '#7e1946' }}>About Artea</h2>
               <p className="mt-2 text-xs sm:text-sm" style={{ color: '#4b4453' }}>
-              Artea serves as a voice advocating for the anticipation and architecting of the future of human–machine collaboration. By blending data science, software engineering, and Generative AI, she surfaces unseen patterns and converts them into decisions about design systems, and products. Current focus through 2030: the impact of the converging emerging technologies on the future of work in tech; The mission: equip institutions and communities to modernize curricula, build equitable pathways, and ensure the workforce thrives in a rapidly changing economy.
+              Over the last 6 years, I've worked to close the gap between the people shaping tomorrow and connecting mid-career professionals, forward-thinking organizations, and nontraditional talent to the emerging tech spaces that will define what comes next.
+
+My work spans workshops that give people hands-on exposure to emerging technology, fractional consulting that helps organizations diagnose what's broken and architect what comes next, advisory roles guiding curriculum and talent pipeline decisions, and speaking that challenges audiences to position proactively instead of reactively. Whether I'm in a room full of early-career technologists or advising decision-makers on inclusive hiring pipelines, the throughline is the same — reading the signals early, connecting people to real opportunity, and building a future that belongs to more of us.
               </p>
               <div className="mt-3 flex flex-wrap gap-2 text-xs" style={{ color: '#9d9171' }}>
                 <span>🎓 Upskilling Workshops</span>
@@ -301,6 +357,13 @@ export default function AW_Speaker_DataScientist() {
             </div>
           </div>
         </Card>
+        <button
+          onClick={handleDownloadResume}
+          className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold text-white shadow transition-all duration-200 hover:opacity-90 hover:scale-105 active:scale-95 active:opacity-80"
+          style={{ backgroundColor: '#ab4e68' }}
+        >
+          Download Resume
+        </button>
       </Section>
 
       {/* WORK EXPERIENCE */}
@@ -309,6 +372,16 @@ export default function AW_Speaker_DataScientist() {
         <p className="text-xs sm:text-sm" style={{ color: '#4b4453' }}>
           Data and research translated to real-world solutions. Delivering measurable outcomes for businesses and institutions.
         </p>
+        <div className="mt-4 w-full overflow-hidden rounded-2xl shadow-xl" style={{ aspectRatio: '16/9', maxHeight: '360px' }}>
+          <video
+            src="/videos/RoboticAgMachine.mp4"
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover"
+          />
+        </div>
         <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-2">
           {workContent.map((project) => {
             const { k, i, t, image } = project;
@@ -362,45 +435,28 @@ export default function AW_Speaker_DataScientist() {
         </div>
       </Section>
 
-      {/* TOPICS & FORMATS */}
-      <Section id="topics" className="pt-8 sm:pt-12">
-        <h2 className="mb-4 text-lg sm:text-xl font-bold tracking-tight" style={{ color: '#7e1946' }}>Talks & Formats</h2>
-        <div id="download-resume" className="grid grid-cols-1 gap-4">
-          {topics.map((t) => (
-            <Card key={t.title}>
-              <div className="flex items-start gap-3">
-                <div className="rounded-xl p-2 shrink-0" aria-hidden style={{ backgroundColor: '#fffbf2', color: '#7e1946', border: '1px solid #c4a287' }}>{t.icon}</div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-sm sm:text-base" style={{ color: '#7e1946' }}>{t.title}</h3>
-                  <p className="mt-1 text-xs sm:text-sm" style={{ color: '#4b4453' }}>{t.blurb}</p>
-                  {t.formats && t.formats.length > 0 && (
-                    <div className="mt-3 flex flex-wrap items-center gap-2">
-                      {t.formats.map((format) => (
-                        <Pill key={format}>{format}</Pill>
-                      ))}
-                    </div>
-                  )}
-                </div>
+      {/* SUBSTACK */}
+      <Section id="substack" className="pt-8 sm:pt-12">
+        <h2 className="mb-4 text-lg sm:text-xl font-bold tracking-tight" style={{ color: '#7e1946' }}>Substack</h2>
+        <div className="grid grid-cols-1 gap-4">
+          <Card>
+            <div className="flex items-start gap-3">
+              <div className="rounded-xl p-2 shrink-0" aria-hidden style={{ backgroundColor: '#fffbf2', color: '#7e1946', border: '1px solid #c4a287' }}>📰</div>
+              <div className="flex-1 min-w-0">
+                <h3 className="font-semibold text-sm sm:text-base" style={{ color: '#7e1946' }}>New Articles Coming Soon</h3>
+                <p className="mt-1 text-xs sm:text-sm" style={{ color: '#4b4453' }}>Subscribe to get notified the moment new posts go live.</p>
               </div>
-            </Card>
-          ))}
+            </div>
+          </Card>
         </div>
-        {/* Buttons for Requests */}
-        <a href="https://calendly.com/arteawright/30min" target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold text-white shadow transition-all duration-200 hover:opacity-90 hover:scale-105 active:scale-95 active:opacity-80" style={{ backgroundColor: '#2b0818' }}>
-          Request an Introductory Call
+        <a href="https://arteaintech.substack.com/" target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold text-white shadow transition-all duration-200 hover:opacity-90 hover:scale-105 active:scale-95 active:opacity-80" style={{ backgroundColor: '#2b0818' }}>
+          Subscribe for More
         </a>
-        <button 
-          onClick={handleDownloadResume}
-          className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold text-white shadow transition-all duration-200 hover:opacity-90 hover:scale-105 active:scale-95 active:opacity-80" 
-          style={{ backgroundColor: '#ab4e68' }}
-        >
-          Download Resume
-        </button>
       </Section>
-      
+
       {/* EVENTS */}
       <Section id="events" className="pt-8 sm:pt-12">
-        <h2 className="mb-4 text-lg sm:text-xl font-bold tracking-tight" style={{ color: '#7e1946' }}>Upcoming Talks</h2>
+        <h2 className="mb-4 text-lg sm:text-xl font-bold tracking-tight" style={{ color: '#7e1946' }}>Workshops</h2>
         <div className="grid grid-cols-1 gap-4">
           {events.map((event, index) => (
             <Card key={index}>
@@ -458,7 +514,7 @@ export default function AW_Speaker_DataScientist() {
       {/* FOOTER */}
       <footer className="border-t border-black/5 py-8" style={{ backgroundColor: 'rgba(255,251,242,0.9)' }}>
         <div className="mx-auto max-w-screen-md px-4 text-center text-xs" style={{ color: '#9d9171' }}>
-          <p>© {new Date().getFullYear()} Artea Wright. Centering clear insights in the age of AI convergence in tech.</p>
+          <p>© {new Date().getFullYear()} Artea Wright. Centering clear insights in the age of emerging tech convergence.</p>
         </div>
       </footer>
 
@@ -468,8 +524,8 @@ export default function AW_Speaker_DataScientist() {
       {/* FORM MODAL */}
       <FormModal
         ref={formModalRef}
-        title="Invite to Speak"
-        subtitle="Share your event or program needs. You'll receive a response within 2 business days."
+        title="What can I help you with?"
+        subtitle="Thanks for reaching out! Please fill out the form below and I'll get back to you within 2 business days."
         fields={formFields}
         buttonText="✉️ Send Inquiry"
         onSubmit={handleFormSubmit}
@@ -477,6 +533,9 @@ export default function AW_Speaker_DataScientist() {
 
       {/* PROJECT MODAL */}
       <ProjectModal ref={projectModalRef} />
+
+      {/* SUBSCRIBE MODAL */}
+      <SubscribeModal ref={subscribeModalRef} onSubmit={handleSubscribeSubmit} />
     </div>
   );
 }

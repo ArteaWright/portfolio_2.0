@@ -3,7 +3,11 @@ import { navItems } from "../data";
 
 const LOGO_DATA_URL = "/images/logo.png";
 
-export default function Navbar() {
+export interface NavbarProps {
+  onSubscribeClick?: () => void;
+}
+
+export default function Navbar({ onSubscribeClick }: NavbarProps) {
   const [menuOpen, setMenuOpen] = React.useState(false);
 
   return (
@@ -23,9 +27,9 @@ export default function Navbar() {
               {n.label}
             </a>
           ))}
-          <a href="#download-resume" className="rounded-xl px-3 py-2 text-sm font-medium text-white focus:outline-none focus-visible:ring-2" style={{ backgroundColor: '#2b0818' }}>
-            Hire Me
-          </a>
+          <button onClick={onSubscribeClick} className="rounded-xl px-3 py-2 text-sm font-medium text-white focus:outline-none focus-visible:ring-2" style={{ backgroundColor: '#2b0818' }}>
+            Subscribe for Updates
+          </button>
         </nav>
         <button aria-label="Open navigation menu" className="sm:hidden rounded-xl p-2 hover:bg-gray-100 focus:outline-none focus-visible:ring-2" onClick={() => setMenuOpen((v) => !v)}>
           <span className="inline-block h-5 w-5">{menuOpen ? "✖️" : "☰"}</span>
@@ -53,18 +57,17 @@ export default function Navbar() {
               {n.label}
             </a>
           ))}
-          <a 
-            href="#download-resume" 
-            onClick={() => setMenuOpen(false)} 
-            className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-xl px-3 py-2 text-sm font-medium text-white transition-opacity duration-300" 
-            style={{ 
+          <button
+            onClick={() => { setMenuOpen(false); onSubscribeClick?.(); }}
+            className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-xl px-3 py-2 text-sm font-medium text-white transition-opacity duration-300"
+            style={{
               backgroundColor: '#2b0818',
               opacity: menuOpen ? 1 : 0,
               transitionDelay: menuOpen ? `${navItems.length * 50}ms` : '0ms'
             }}
           >
-            Hire Me
-          </a>
+            Subscribe for Updates
+          </button>
         </div>
       </div>
     </header>
