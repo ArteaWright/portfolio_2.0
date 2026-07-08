@@ -1,0 +1,4 @@
+project_id = "tmleheqlyeirqluqtpqb"
+
+[functions.receive-email-webhook]
+verify_jwt = false
