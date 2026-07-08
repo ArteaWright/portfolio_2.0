@@ -6,10 +6,14 @@ import Navbar from "./components/Navbar";
 import FormModal from "./components/FormModal";
 import ProjectModal from "./components/ProjectModal";
 import SubscribeModal from "./components/SubscribeModal";
+import SubstackModal from "./components/SubstackModal";
 import type { FormModalRef, FormField } from "./components/FormModal";
 import type { ProjectModalRef } from "./components/ProjectModal";
 import type { ProjectData } from "./components/ProjectModal";
 import type { SubscribeModalRef, SubscribeFormData } from "./components/SubscribeModal";
+import type { SubstackModalRef } from "./components/SubstackModal";
+import { fetchSubstackPosts } from "./lib/substack";
+import type { SubstackPost } from "./lib/substack";
 import { chips, testimonials, workContent, logos, events } from "./data";
 
 
@@ -21,6 +25,12 @@ export default function AW_Speaker_DataScientist() {
   const formModalRef = useRef<FormModalRef>(null);
   const projectModalRef = useRef<ProjectModalRef>(null);
   const subscribeModalRef = useRef<SubscribeModalRef>(null);
+  const substackModalRef = useRef<SubstackModalRef>(null);
+  const [substackPosts, setSubstackPosts] = useState<SubstackPost[]>([]);
+
+  React.useEffect(() => {
+    fetchSubstackPosts().then(setSubstackPosts);
+  }, []);
 
   // Enhanced smooth and slow scrolling
   React.useEffect(() => {
@@ -145,48 +155,22 @@ export default function AW_Speaker_DataScientist() {
 
   const handleFormSubmit = async (formData: Record<string, string>) => {
     try {
-      // Import supabase client
+      // Import supabase client (used here only to invoke the email-sending Edge Function)
       const { supabase } = await import('./lib/supabase');
-      
-      // Check if Supabase is configured
-      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-      const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-      
-      if (!supabaseUrl || !supabaseKey) {
-        console.error('Supabase credentials not found. Please set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in your .env file');
-        alert('Database configuration error. Please contact support.');
-        throw new Error('Supabase credentials missing');
-      }
-      
-      // Insert form data into Supabase
-      const { data, error } = await supabase
-        .from('form_submissions')
-        .insert([
-          {
-            name: formData.name,
-            email: formData.email,
-            organization: formData.organization || null,
-            message: formData.message || null,
-          },
-        ])
-        .select();
+
+      const { error } = await supabase.functions.invoke('send-contact-email', {
+        body: formData,
+      });
 
       if (error) {
-        console.error('Supabase error details:', {
-          message: error.message,
-          details: error.details,
-          hint: error.hint,
-          code: error.code
-        });
+        console.error('Failed to send contact email:', error);
         throw error; // Throw error so modal stays open
       }
 
-      console.log('Form submitted successfully:', data);
+      console.log('Contact form email sent successfully');
     } catch (error: any) {
       console.error('Form submission error:', error);
-      if (error?.message && !error.message.includes('Supabase credentials missing')) {
-        alert(`Error: ${error.message}`);
-      }
+      alert(`Error: ${error?.message || 'Failed to send your message. Please try again.'}`);
       throw error; // Re-throw to keep modal open
     }
   };
@@ -204,7 +188,7 @@ export default function AW_Speaker_DataScientist() {
         throw new Error('Supabase credentials missing');
       }
 
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from('web_subs')
         .insert([
           {
@@ -216,8 +200,7 @@ export default function AW_Speaker_DataScientist() {
             substack: formData.substackUpdates,
             workshop: formData.workshopUpdates,
           },
-        ])
-        .select();
+        ]);
 
       if (error) {
         console.error('Supabase error details:', {
@@ -229,7 +212,7 @@ export default function AW_Speaker_DataScientist() {
         throw error;
       }
 
-      console.log('Subscription submitted successfully:', data);
+      console.log('Subscription submitted successfully');
     } catch (error: any) {
       console.error('Subscribe submission error:', error);
       if (error?.message && !error.message.includes('Supabase credentials missing')) {
@@ -334,7 +317,7 @@ export default function AW_Speaker_DataScientist() {
 
 
       {/* ABOUT */}
-      <Section id="about" className="pt-8 sm:pt-12">
+      <Section id="about" className="pt-8 sm:pt-12" direction="left">
         <Card>
           <div className="flex flex-col gap-4 sm:flex-row">
             {LOGO_DATA_URL ? (
@@ -364,13 +347,29 @@ My work spans workshops that give people hands-on exposure to emerging technolog
         >
           Download Resume
         </button>
+
+        <div className="mt-6 text-center">
+          <h3 className="text-sm sm:text-base font-semibold" style={{ color: '#7e1946' }}>Need Hands-On Support?</h3>
+          <p className="mt-1 text-xs sm:text-sm" style={{ color: '#4b4453' }}>
+            For organizations and professionals looking for consultant support with Future-Fit Careers and Talent services and emerging tech integration.
+          </p>
+        </div>
+        <a
+          href="https://www.paypal.com/ncp/payment/9L4MJ58MBKGDL"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold text-white shadow transition-all duration-200 hover:opacity-90 hover:scale-105 active:scale-95 active:opacity-80"
+          style={{ backgroundColor: '#2b0818' }}
+        >
+          Book a Consultation
+        </a>
       </Section>
 
       {/* WORK EXPERIENCE */}
-      <Section id="work" className="pt-8 sm:pt-12">
+      <Section id="work" className="pt-8 sm:pt-12" direction="right">
         <h2 className="mb-4 text-lg sm:text-xl font-bold tracking-tight" style={{ color: '#7e1946' }}>Applied Work and Impact</h2>
         <p className="text-xs sm:text-sm" style={{ color: '#4b4453' }}>
-          Data and research translated to real-world solutions. Delivering measurable outcomes for businesses and institutions.
+          Data and research translated to real-world solutions.
         </p>
         <div className="mt-4 w-full overflow-hidden rounded-2xl shadow-xl" style={{ aspectRatio: '16/9', maxHeight: '360px' }}>
           <video
@@ -436,18 +435,40 @@ My work spans workshops that give people hands-on exposure to emerging technolog
       </Section>
 
       {/* SUBSTACK */}
-      <Section id="substack" className="pt-8 sm:pt-12">
+      <Section id="substack" className="pt-8 sm:pt-12" direction="left">
         <h2 className="mb-4 text-lg sm:text-xl font-bold tracking-tight" style={{ color: '#7e1946' }}>Substack</h2>
         <div className="grid grid-cols-1 gap-4">
-          <Card>
-            <div className="flex items-start gap-3">
-              <div className="rounded-xl p-2 shrink-0" aria-hidden style={{ backgroundColor: '#fffbf2', color: '#7e1946', border: '1px solid #c4a287' }}>📰</div>
-              <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-sm sm:text-base" style={{ color: '#7e1946' }}>New Articles Coming Soon</h3>
-                <p className="mt-1 text-xs sm:text-sm" style={{ color: '#4b4453' }}>Subscribe to get notified the moment new posts go live.</p>
+          {substackPosts.length > 0 ? (
+            substackPosts.map((post) => (
+              <Card
+                key={post.slug}
+                className="cursor-pointer transition-all duration-300 ease-in-out hover:scale-[1.02] hover:shadow-xl"
+                onClick={() => substackModalRef.current?.open(post)}
+              >
+                <div className="flex items-start gap-3">
+                  <div className="rounded-xl p-2 shrink-0" aria-hidden style={{ backgroundColor: '#fffbf2', color: '#7e1946', border: '1px solid #c4a287' }}>📰</div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-semibold text-sm sm:text-base" style={{ color: '#7e1946' }}>{post.title}</h3>
+                    <p className="mt-1 text-xs sm:text-sm" style={{ color: '#4b4453' }}>{post.description || `${post.excerpt.slice(0, 140)}…`}</p>
+                    <p className="mt-2 text-xs" style={{ color: '#9d9171' }}>
+                      {new Date(post.date).toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" })}
+                      {" • "}{post.readingTimeMinutes} min read
+                    </p>
+                  </div>
+                </div>
+              </Card>
+            ))
+          ) : (
+            <Card>
+              <div className="flex items-start gap-3">
+                <div className="rounded-xl p-2 shrink-0" aria-hidden style={{ backgroundColor: '#fffbf2', color: '#7e1946', border: '1px solid #c4a287' }}>📰</div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-semibold text-sm sm:text-base" style={{ color: '#7e1946' }}>New Articles Coming Soon</h3>
+                  <p className="mt-1 text-xs sm:text-sm" style={{ color: '#4b4453' }}>Subscribe to get notified the moment new posts go live.</p>
+                </div>
               </div>
-            </div>
-          </Card>
+            </Card>
+          )}
         </div>
         <a href="https://arteaintech.substack.com/" target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold text-white shadow transition-all duration-200 hover:opacity-90 hover:scale-105 active:scale-95 active:opacity-80" style={{ backgroundColor: '#2b0818' }}>
           Subscribe for More
@@ -455,7 +476,7 @@ My work spans workshops that give people hands-on exposure to emerging technolog
       </Section>
 
       {/* EVENTS */}
-      <Section id="events" className="pt-8 sm:pt-12">
+      <Section id="events" className="pt-8 sm:pt-12" direction="right">
         <h2 className="mb-4 text-lg sm:text-xl font-bold tracking-tight" style={{ color: '#7e1946' }}>Workshops</h2>
         <div className="grid grid-cols-1 gap-4">
           {events.map((event, index) => (
@@ -476,7 +497,7 @@ My work spans workshops that give people hands-on exposure to emerging technolog
       </Section>
 
       {/* TESTIMONIALS */}
-      <Section id="testimonials" className="pt-8 sm:pt-12 pb-8 sm:pb-12">
+      <Section id="testimonials" className="pt-8 sm:pt-12 pb-8 sm:pb-12" direction="left">
         <h2 className="mb-4 text-lg sm:text-xl font-bold tracking-tight" style={{ color: '#7e1946' }}>Testimonials</h2>
         <div className="grid grid-cols-1 gap-4">
           {testimonials.map((t, idx) => (
@@ -536,6 +557,9 @@ My work spans workshops that give people hands-on exposure to emerging technolog
 
       {/* SUBSCRIBE MODAL */}
       <SubscribeModal ref={subscribeModalRef} onSubmit={handleSubscribeSubmit} />
+
+      {/* SUBSTACK MODAL */}
+      <SubstackModal ref={substackModalRef} />
     </div>
   );
 }

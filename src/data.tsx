@@ -77,6 +77,9 @@ export const workContent = [
 ];
 
 export const events = [
+  { title: "NFTCLT x TechTrapCLT: Blockchain for Creatives and Enthusiasts", date: "Feb 17, 2024", location: "Tabbris, South Boulevard, Charlotte, NC", link: "https://www.eventbrite.com/e/nftclt-x-techtrapclt-blockchain-for-creatives-and-enthusiasts-tickets-824449018207?aff=ebdsoporgprofile" },
+  { title: "AgTech Hackathon: Smart Indoor Gardening", date: "May 18-19, 2024", location: "Center for Entrepreneurship and Innovation at UNC Charlotte, Charlotte, NC", link: "https://www.eventbrite.com/e/agtech-hackathon-smart-indoor-gardening-tickets-853436961927?aff=ebdsoporgprofile" },
+  { title: "GenAI: Artificial Intelligence, Behind the Veil", date: "Aug 1, 2025", location: "Online", link: "https://www.eventbrite.com/e/genai-artificial-intelligence-behind-the-veil-tickets-1494101430599?aff=ebdsoporgprofile" },
   { title: "R.O.O.T.S Workshop for Women in Tech", date: "Nov 22, 2025", location: "CPCC Parr Center for Innovation, Charlotte, NC", link: "https://www.eventbrite.com/e/copy-of-rooted-real-ones-owning-tech-education-and-development-tickets-1835335310319?utm-campaign=social&utm-content=attendeeshare&utm-medium=discovery&utm-term=listing&utm-source=cp&aff=ebdsshcopyurl" },
 ];
 
