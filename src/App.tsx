@@ -142,8 +142,8 @@ export default function AW_Speaker_DataScientist() {
   const handleDownloadResume = () => {
     // Create a temporary anchor element to trigger download
     const link = document.createElement('a');
-    link.href = '/file/ArteaWright_Data-Science.pdf';
-    link.download = 'ArteaWright_Data-Science.pdf';
+    link.href = '/file/ArteaWright_Resume.pdf';
+    link.download = 'ArteaWright_Resume.pdf';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

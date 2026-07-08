@@ -9,6 +9,15 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -29,13 +38,18 @@ Deno.serve(async (req: Request) => {
       throw new Error("RESEND_API_KEY secret is not set on this Edge Function.");
     }
 
+    const safeName = escapeHtml(String(name));
+    const safeEmail = escapeHtml(String(email));
+    const safeOrganization = escapeHtml(String(organization || "—"));
+    const safeMessage = escapeHtml(String(message || "—")).replace(/\n/g, "<br/>");
+
     const emailHtml = `
       <h2>New Contact Form Submission</h2>
-      <p><strong>Name:</strong> ${name}</p>
-      <p><strong>Email:</strong> ${email}</p>
-      <p><strong>Organization:</strong> ${organization || "—"}</p>
+      <p><strong>Name:</strong> ${safeName}</p>
+      <p><strong>Email:</strong> ${safeEmail}</p>
+      <p><strong>Organization:</strong> ${safeOrganization}</p>
       <p><strong>Message:</strong></p>
-      <p>${(message || "—").replace(/\n/g, "<br/>")}</p>
+      <p>${safeMessage}</p>
     `;
 
     const resendResponse = await fetch("https://api.resend.com/emails", {
@@ -48,7 +62,7 @@ Deno.serve(async (req: Request) => {
         from: "Portfolio Contact Form <onboarding@resend.dev>",
         to: [CONTACT_RECIPIENT],
         reply_to: email,
-        subject: `New inquiry from ${name}`,
+        subject: `New inquiry from ${safeName}`,
         html: emailHtml,
       }),
     });
