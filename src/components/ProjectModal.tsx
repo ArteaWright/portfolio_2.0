@@ -175,6 +175,17 @@ const ProjectModal = forwardRef<ProjectModalRef, ProjectModalProps>(
                 {research.links && research.links.length > 0 && (
                   <div>
                     <h3 className="text-lg font-semibold mb-3" style={{ color: "#7e1946" }}>Resources</h3>
+                    <div
+                      role="img"
+                      aria-label="Design template, chart, or graphic placeholder"
+                      className="mb-4 w-full h-48 sm:h-56 rounded-xl flex flex-col items-center justify-center gap-2 border border-dashed"
+                      style={{ backgroundColor: "#fffbf2", borderColor: "#c4a287" }}
+                    >
+                      <svg className="w-10 h-10" fill="none" stroke="#c4a287" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14M4 8h16M4 4h16v16H4V4z" />
+                      </svg>
+                      <span className="text-xs font-medium" style={{ color: "#9d9171" }}>Design template, chart, or graphic preview</span>
+                    </div>
                     <div className="flex flex-col gap-2">
                       {research.links.map((link, index) => (
                         <a
