@@ -1,23 +1,15 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
+// Publishable (anon) key + project URL — Supabase's "sb_publishable_" keys are
+// designed to ship inside the client bundle (RLS policies, not key secrecy,
+// protect the data). Hardcoded as a fallback so the app works in production
+// even when a hosting platform's build step doesn't inject VITE_ env vars;
+// import.meta.env still wins when set, so local/.env-based overrides work too.
+const FALLBACK_SUPABASE_URL = 'https://tmleheqlyeirqluqtpqb.supabase.co';
+const FALLBACK_SUPABASE_ANON_KEY = 'sb_publishable_awaPaCZhzKgqLMQFTcbhPQ_cWbCI-Ln';
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  console.error('⚠️ Supabase URL and Anon Key must be set in environment variables');
-  console.error('Locally: create a .env file with VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY.');
-  console.error('In production: set those variables in the hosting platform\'s build environment.');
-} else {
-  console.log('✅ Supabase client initialized');
-}
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || FALLBACK_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || FALLBACK_SUPABASE_ANON_KEY;
 
-// createClient throws synchronously on an empty/invalid URL. Since this module
-// is statically imported (supabase.ts -> substack.ts -> App.tsx), that throw
-// would happen before React ever mounts, crashing the whole app to a blank
-// screen. Fall back to a syntactically valid placeholder so a missing config
-// degrades to failed network calls (already handled by callers) instead.
-export const supabase = createClient(
-  supabaseUrl || 'https://placeholder.supabase.co',
-  supabaseAnonKey || 'placeholder-anon-key'
-);
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 

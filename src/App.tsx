@@ -192,15 +192,6 @@ export default function AW_Speaker_DataScientist() {
     try {
       const { supabase } = await import('./lib/supabase');
 
-      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-      const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-
-      if (!supabaseUrl || !supabaseKey) {
-        console.error('Supabase credentials not found. Please set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in your .env file');
-        alert('Database configuration error. Please contact support.');
-        throw new Error('Supabase credentials missing');
-      }
-
       const { error } = await supabase
         .from('web_subs')
         .insert([
