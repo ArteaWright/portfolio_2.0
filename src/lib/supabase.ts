@@ -5,12 +5,19 @@ const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
 
 if (!supabaseUrl || !supabaseAnonKey) {
   console.error('⚠️ Supabase URL and Anon Key must be set in environment variables');
-  console.error('Please create a .env file with:');
-  console.error('VITE_SUPABASE_URL=your_supabase_project_url');
-  console.error('VITE_SUPABASE_ANON_KEY=your_supabase_anon_key');
+  console.error('Locally: create a .env file with VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY.');
+  console.error('In production: set those variables in the hosting platform\'s build environment.');
 } else {
   console.log('✅ Supabase client initialized');
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// createClient throws synchronously on an empty/invalid URL. Since this module
+// is statically imported (supabase.ts -> substack.ts -> App.tsx), that throw
+// would happen before React ever mounts, crashing the whole app to a blank
+// screen. Fall back to a syntactically valid placeholder so a missing config
+// degrades to failed network calls (already handled by callers) instead.
+export const supabase = createClient(
+  supabaseUrl || 'https://placeholder.supabase.co',
+  supabaseAnonKey || 'placeholder-anon-key'
+);
 
