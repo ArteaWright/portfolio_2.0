@@ -1,4 +1,4 @@
-import substackPosts from "../data/substack-posts.json";
+import { supabase } from "./supabase";
 
 export interface SubstackPost {
   slug: string;
@@ -11,5 +11,12 @@ export interface SubstackPost {
 }
 
 export async function fetchSubstackPosts(): Promise<SubstackPost[]> {
-  return substackPosts as SubstackPost[];
+  const { data, error } = await supabase.functions.invoke("fetch-substack-posts");
+
+  if (error) {
+    console.error("Failed to fetch Substack posts:", error);
+    return [];
+  }
+
+  return (data ?? []) as SubstackPost[];
 }

@@ -27,9 +27,22 @@ export default function AW_Speaker_DataScientist() {
   const subscribeModalRef = useRef<SubscribeModalRef>(null);
   const substackModalRef = useRef<SubstackModalRef>(null);
   const [substackPosts, setSubstackPosts] = useState<SubstackPost[]>([]);
+  const [substackLoading, setSubstackLoading] = useState(true);
 
   React.useEffect(() => {
-    fetchSubstackPosts().then(setSubstackPosts);
+    let cancelled = false;
+
+    fetchSubstackPosts()
+      .then((posts) => {
+        if (!cancelled) setSubstackPosts(posts);
+      })
+      .finally(() => {
+        if (!cancelled) setSubstackLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   // Enhanced smooth and slow scrolling
@@ -438,7 +451,20 @@ My work spans workshops that give people hands-on exposure to emerging technolog
       <Section id="substack" className="pt-8 sm:pt-12" direction="left">
         <h2 className="mb-4 text-lg sm:text-xl font-bold tracking-tight" style={{ color: '#7e1946' }}>Substack</h2>
         <div className="grid grid-cols-1 gap-4">
-          {substackPosts.length > 0 ? (
+          {substackLoading ? (
+            Array.from({ length: 2 }).map((_, idx) => (
+              <Card key={idx} className="animate-pulse">
+                <div className="flex items-start gap-3">
+                  <div className="rounded-xl p-2 shrink-0 h-9 w-9" aria-hidden style={{ backgroundColor: '#fffbf2', border: '1px solid #c4a287' }} />
+                  <div className="flex-1 min-w-0 space-y-2">
+                    <div className="h-4 rounded" style={{ backgroundColor: '#f0e6d6', width: '60%' }} />
+                    <div className="h-3 rounded" style={{ backgroundColor: '#f0e6d6', width: '90%' }} />
+                    <div className="h-3 rounded" style={{ backgroundColor: '#f0e6d6', width: '30%' }} />
+                  </div>
+                </div>
+              </Card>
+            ))
+          ) : substackPosts.length > 0 ? (
             substackPosts.map((post) => (
               <Card
                 key={post.slug}
