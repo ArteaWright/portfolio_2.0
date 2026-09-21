@@ -1,5 +1,6 @@
 export const navItems = [
   { label: "About", href: "#about" },
+  { label: "Services", href: "#services" },
   { label: "Substack", href: "#substack" },
   { label: "Testimonials", href: "#testimonials" },
 ];
@@ -74,6 +75,56 @@ export const workContent = [
   //     ]
   //   }
   // }
+];
+
+export const servicesIntro = {
+  eyebrow: "What I Offer",
+  headline: "Two ways to work with me",
+  subhead: "Whether you're a business weighing emerging tech, or an individual technologist mapping your next move, start with a conversation.",
+};
+
+export const services = [
+  {
+    id: "business",
+    audience: "For businesses",
+    title: "Emerging Tech Readiness Assessment",
+    description: "A scoped, fixed-price readiness and feasibility assessment across AI, blockchain, quantum computing, and AR/VR, ending in a written report.",
+    primary: { label: "Book a free discovery call" },
+    secondary: { label: "See how it works", href: "#services-process" },
+  },
+  {
+    id: "individual",
+    audience: "For individual technologists",
+    title: "Career Direction Session",
+    description: "A flat-fee, personal skills-gap assessment and roadmap for individual technologists navigating AI, blockchain, quantum, and AR/VR shifts in their field.",
+    price: "$200–$400 flat fee",
+    primary: { label: "Book your session" },
+    secondary: { label: "What you'll get", href: "#services-deliverables" },
+  },
+];
+
+// Draft detail copy behind each card's secondary button. Kept to what the offers
+// already promise; edit freely.
+export const serviceDetails = [
+  {
+    id: "services-process",
+    title: "How the assessment works",
+    items: [
+      { heading: "Free discovery call", text: "We talk through your goals and constraints and decide what the assessment should cover." },
+      { heading: "Scope and fixed price", text: "Scope and a fixed price ($1,500–$4,000) are agreed before any work begins." },
+      { heading: "Readiness and feasibility review", text: "Each in-scope area — AI, blockchain, quantum computing, AR/VR — is assessed for readiness and feasibility." },
+      { heading: "Written report", text: "The engagement ends with a written report of the findings." },
+    ],
+  },
+  {
+    id: "services-deliverables",
+    title: "What you'll get",
+    items: [
+      { heading: "Personal skills-gap assessment", text: "Where your skills stand against the AI, blockchain, quantum, and AR/VR shifts in your field." },
+      { heading: "Roadmap", text: "A roadmap for your next move, built from that assessment." },
+      { heading: "Flat fee", text: "One flat fee ($200–$400), agreed up front." },
+    ],
+  },
 ];
 
 export const events = [

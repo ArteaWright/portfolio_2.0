@@ -3,6 +3,7 @@ import Section from "./components/Section";
 import Card from "./components/Card";
 import Pill from "./components/Pill";
 import Navbar from "./components/Navbar";
+import Services from "./components/Services";
 import FormModal from "./components/FormModal";
 import ProjectModal from "./components/ProjectModal";
 import SubscribeModal from "./components/SubscribeModal";
@@ -234,7 +235,7 @@ export default function AW_Speaker_DataScientist() {
   ];
 
   return (
-    <div className="min-h-screen text-gray-900" style={{ background: "linear-gradient(to bottom, #fffbf2, #ffffff)" }}>
+    <div className="min-h-screen overflow-x-clip text-gray-900" style={{ background: "linear-gradient(to bottom, #fffbf2, #ffffff)" }}>
       {/* NAVBAR */}
       <Navbar onSubscribeClick={() => subscribeModalRef.current?.open()} />
 
@@ -351,23 +352,10 @@ My work spans workshops that give people hands-on exposure to emerging technolog
         >
           Download Resume
         </button>
-
-        <div className="mt-6 text-center">
-          <h3 className="text-sm sm:text-base font-semibold" style={{ color: '#7e1946' }}>Need Hands-On Support?</h3>
-          <p className="mt-1 text-xs sm:text-sm" style={{ color: '#4b4453' }}>
-            For organizations and professionals looking for consultant support with Future-Fit Careers and Talent services and emerging tech integration.
-          </p>
-        </div>
-        <a
-          href="https://www.paypal.com/ncp/payment/9L4MJ58MBKGDL"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold text-white shadow transition-all duration-200 hover:opacity-90 hover:scale-105 active:scale-95 active:opacity-80"
-          style={{ backgroundColor: '#2b0818' }}
-        >
-          Book a Consultation
-        </a>
       </Section>
+
+      {/* SERVICES */}
+      <Services onBook={handleOpenFormModal}></Services>
 
       {/* WORK EXPERIENCE */}
       <Section id="work" className="pt-8 sm:pt-12" direction="right">

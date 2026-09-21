@@ -17,6 +17,46 @@ html {
   }
 }
 
+/* Hide scrollbar on the swipeable Services carousel */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* One-time highlight for the Services primary CTA (triggered via IntersectionObserver) */
+.cta-primary {
+  position: relative;
+  overflow: hidden;
+}
+.cta-highlight {
+  animation: cta-glow 1.8s ease-out 1;
+}
+.cta-highlight::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(110deg, transparent 30%, rgba(126, 25, 70, 0.18) 50%, transparent 70%);
+  transform: translateX(-100%);
+  animation: cta-shimmer 1.4s ease-out 0.2s 1 forwards;
+}
+@keyframes cta-glow {
+  0%   { box-shadow: 0 0 0 0 rgba(255, 251, 242, 0.6); }
+  60%  { box-shadow: 0 0 0 14px rgba(255, 251, 242, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 251, 242, 0); }
+}
+@keyframes cta-shimmer {
+  to { transform: translateX(100%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cta-highlight,
+  .cta-highlight::after {
+    animation: none;
+  }
+}
+
 /* THEME VARIABLES: Warm palette: #7e1946, #ab4e68, #c4a287, #9d9171, #b07156, #fffbf2 */
 :root {
   --brand-1000:#1c1005;
